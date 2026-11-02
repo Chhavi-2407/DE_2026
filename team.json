@@ -1,0 +1,27 @@
+{
+  "team_number": "T0094",
+  "group_lead": {
+    "name": "Chhavi",
+    "enrollment_no": "2501010542",
+    "github": "Chhavi-2407"
+  },
+  "members": [
+    {
+      "name": "Aditya Harsh",
+      "enrollment_no": "2501010035",
+      "github": "Adityaharsh38"
+    },
+    {
+      "name": "Urvita Sharma",
+      "enrollment_no": "2501010486",
+      "github": "urvitasharma"
+    },
+    {
+      "name": "Neev Kumar",
+      "enrollment_no": "2501010299",
+      "github": "Neev7124"
+    }
+  ],
+  "postgres_version": "18.6",
+  "laptop_used_for_benchmarks": "Macbook Pro, Apple M4, 16GB RAM"
+}
