@@ -27,7 +27,7 @@
 | Member 3 | Urvita Sharma | 2501010486 | urvitasharma |
 | Member 4 | Neev Kumar | 2501010299 | Neev7124 |
 
-**Team No.:** ____ · **Section:** ____ · **Repository URL:** ____
+**Team No.:** T0094 · **Section:** A · **Repository URL:** https://github.com/Chhavi-2407/DE_2026.git
 
 ---
 
