@@ -22,10 +22,10 @@
 
 | Role | Name | Enrollment No. | GitHub Username |
 |------|------|----------------|-----------------|
-| Group Lead | | | |
-| Member 2 | | | |
-| Member 3 | | | |
-| Member 4 | | | |
+| Group Lead | Chhavi | 2501010542 | Chhavi-2407 |
+| Member 2 | Aditya Harsh | 2501010035 | Adityaharsh38 |
+| Member 3 | Urvita Sharma | 2501010486 | urvitasharma |
+| Member 4 | Neev Kumar | 2501010299 | Neev7124 |
 
 **Team No.:** ____ · **Section:** ____ · **Repository URL:** ____
 
