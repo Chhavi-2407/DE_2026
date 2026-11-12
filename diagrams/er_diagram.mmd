@@ -1,0 +1,124 @@
+erDiagram
+
+    CITIES {
+        int city_id PK
+        varchar city_name
+        varchar state
+    }
+
+    CUSTOMERS {
+        int customer_id PK
+        varchar full_name
+        varchar phone UK
+        varchar email UK
+        int city_id FK
+        date plus_valid_until
+        timestamptz created_at
+    }
+
+    SERVICE_CATEGORIES {
+        int category_id PK
+        varchar category_name UK
+    }
+
+    SERVICES {
+        int service_id PK
+        int category_id FK
+        varchar service_name UK
+        int duration_min
+        numeric base_price
+        boolean is_active
+    }
+
+    PROFESSIONALS {
+        int pro_id PK
+        varchar full_name
+        varchar phone
+        int city_id FK
+        varchar gender
+        date joined_on
+        numeric rating
+        boolean kyc_verified
+        varchar status
+    }
+
+    PRO_SKILLS {
+        int pro_id PK, FK
+        int category_id PK, FK
+        date certified_on
+    }
+
+    PRO_AVAILABILITY {
+        int pro_id PK, FK
+        date work_date PK
+        time start_time PK
+        time end_time
+    }
+
+    BOOKINGS {
+        int booking_id PK
+        int customer_id FK
+        int service_id FK
+        int pro_id FK
+        int city_id FK
+        varchar pincode
+        timestamptz booked_at
+        timestamptz scheduled_start
+        timestamptz scheduled_end
+        timestamptz started_at
+        timestamptz completed_at
+        varchar status
+        numeric price
+        numeric discount
+        numeric cancellation_fee
+        numeric tip
+        varchar payment_method
+    }
+
+    RESCHEDULES {
+        int reschedule_id PK
+        int booking_id FK
+        timestamptz old_start
+        timestamptz new_start
+        varchar requested_by
+        text reason
+        timestamptz created_at
+    }
+
+    REVIEWS {
+        int booking_id PK, FK
+        int rating_for_pro
+        text comment
+        int rating_for_customer
+        timestamptz created_at
+    }
+
+    PAYOUTS {
+        int payout_id PK
+        int pro_id FK
+        date week_start
+        int jobs
+        numeric gross_earnings
+        numeric commission
+        numeric net_payout
+        varchar status
+        timestamptz paid_at
+    }
+
+    CITIES ||--o{ CUSTOMERS : has
+    CITIES ||--o{ PROFESSIONALS : has
+    CITIES ||--o{ BOOKINGS : serves
+
+    SERVICE_CATEGORIES ||--o{ SERVICES : contains
+    SERVICE_CATEGORIES ||--o{ PRO_SKILLS : includes
+
+    PROFESSIONALS ||--o{ PRO_SKILLS : has
+    PROFESSIONALS ||--o{ PRO_AVAILABILITY : schedules
+    PROFESSIONALS o|--o{ BOOKINGS : assigned_to
+    PROFESSIONALS ||--o{ PAYOUTS : receives
+
+    CUSTOMERS ||--o{ BOOKINGS : creates
+    SERVICES ||--o{ BOOKINGS : selected_for
+
+    BOOKINGS ||--o{ RESCHEDULES : has
+    BOOKINGS ||--o| REVIEWS : receives
