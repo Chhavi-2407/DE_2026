@@ -1,5 +1,5 @@
-CREATE SCHEMA IF NOT EXISTS urban_company;
-SET search_path TO urban_company;
+CREATE SCHEMA IF NOT EXISTS uc;
+SET search_path TO uc;
 -- Table 1: Cities
 CREATE TABLE IF NOT EXISTS cities (
 city_id INTEGER PRIMARY KEY,
@@ -94,8 +94,8 @@ status VARCHAR(30) NOT NULL CHECK (status IN (
 'REQUESTED'
 )),
 price NUMERIC(10,2) NOT NULL CHECK (price >= 0),
-discount NUMERIC(10,2) NOT NULL CHECK (discount >= 0),
-cancellation_fee NUMERIC(10,2) NOT NULL CHECK
+discount NUMERIC(10,2) NOT NULL DEFAULT 0 CHECK (discount >= 0),
+cancellation_fee NUMERIC(10,2) NOT NULL DEFAULT 0 CHECK
 (cancellation_fee >= 0),
 tip NUMERIC(10,2) CHECK (tip >= 0),
 payment_method VARCHAR(20) NOT NULL CHECK (payment_method IN
