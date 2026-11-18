@@ -1,0 +1,57 @@
+=== W04 run 1 ===
+Insert on payouts  (cost=30.86..48.55 rows=0 width=0) (actual time=1.482..1.483 rows=0.00 loops=1)
+  Buffers: shared hit=2833 dirtied=9 written=5
+  ->  Subquery Scan on "*SELECT*"  (cost=30.86..48.55 rows=354 width=130) (actual time=0.243..0.395 rows=401.00 loops=1)
+        Buffers: shared hit=411
+        ->  HashAggregate  (cost=30.86..41.48 rows=354 width=148) (actual time=0.242..0.360 rows=401.00 loops=1)
+              Group Key: bookings.pro_id
+              Batches: 1  Memory Usage: 320kB
+              Buffers: shared hit=411
+              ->  Index Only Scan using idx_bookings_completed_at_pro_payout on bookings  (cost=0.42..24.12 rows=385 width=17) (actual time=0.029..0.119 rows=462.00 loops=1)
+                    Index Cond: ((completed_at >= '2026-06-29 00:00:00+05:30'::timestamp with time zone) AND (completed_at < '2026-07-06 00:00:00+05:30'::timestamp with time zone))
+                    Heap Fetches: 429
+                    Index Searches: 1
+                    Buffers: shared hit=411
+Planning:
+  Buffers: shared hit=479
+Planning Time: 0.687 ms
+Trigger for constraint fk_payouts_professional: time=1.097 calls=401
+Execution Time: 2.630 ms
+=== W04 run 2 ===
+Insert on payouts  (cost=30.86..48.55 rows=0 width=0) (actual time=1.311..1.311 rows=0.00 loops=1)
+  Buffers: shared hit=2846 dirtied=4 written=4
+  ->  Subquery Scan on "*SELECT*"  (cost=30.86..48.55 rows=354 width=130) (actual time=0.242..0.380 rows=401.00 loops=1)
+        Buffers: shared hit=407
+        ->  HashAggregate  (cost=30.86..41.48 rows=354 width=148) (actual time=0.241..0.347 rows=401.00 loops=1)
+              Group Key: bookings.pro_id
+              Batches: 1  Memory Usage: 320kB
+              Buffers: shared hit=407
+              ->  Index Only Scan using idx_bookings_completed_at_pro_payout on bookings  (cost=0.42..24.12 rows=385 width=17) (actual time=0.030..0.113 rows=462.00 loops=1)
+                    Index Cond: ((completed_at >= '2026-06-29 00:00:00+05:30'::timestamp with time zone) AND (completed_at < '2026-07-06 00:00:00+05:30'::timestamp with time zone))
+                    Heap Fetches: 425
+                    Index Searches: 1
+                    Buffers: shared hit=407
+Planning:
+  Buffers: shared hit=479
+Planning Time: 0.694 ms
+Trigger for constraint fk_payouts_professional: time=1.010 calls=401
+Execution Time: 2.370 ms
+=== W04 run 3 ===
+Insert on payouts  (cost=30.86..48.55 rows=0 width=0) (actual time=1.392..1.392 rows=0.00 loops=1)
+  Buffers: shared hit=2833 dirtied=11 written=11
+  ->  Subquery Scan on "*SELECT*"  (cost=30.86..48.55 rows=354 width=130) (actual time=0.236..0.369 rows=401.00 loops=1)
+        Buffers: shared hit=407
+        ->  HashAggregate  (cost=30.86..41.48 rows=354 width=148) (actual time=0.235..0.339 rows=401.00 loops=1)
+              Group Key: bookings.pro_id
+              Batches: 1  Memory Usage: 320kB
+              Buffers: shared hit=407
+              ->  Index Only Scan using idx_bookings_completed_at_pro_payout on bookings  (cost=0.42..24.12 rows=385 width=17) (actual time=0.030..0.113 rows=462.00 loops=1)
+                    Index Cond: ((completed_at >= '2026-06-29 00:00:00+05:30'::timestamp with time zone) AND (completed_at < '2026-07-06 00:00:00+05:30'::timestamp with time zone))
+                    Heap Fetches: 425
+                    Index Searches: 1
+                    Buffers: shared hit=407
+Planning:
+  Buffers: shared hit=479
+Planning Time: 0.698 ms
+Trigger for constraint fk_payouts_professional: time=0.965 calls=401
+Execution Time: 2.405 ms

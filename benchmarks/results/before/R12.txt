@@ -1,0 +1,54 @@
+=== R12 run 1 ===
+GroupAggregate  (cost=736.87..739.39 rows=101 width=48) (actual time=3.417..3.642 rows=6.00 loops=1)
+  Group Key: (date_trunc('month'::text, booked_at))
+  Buffers: shared hit=144 read=60
+  ->  Sort  (cost=736.87..737.12 rows=101 width=11) (actual time=3.348..3.435 rows=4543.00 loops=1)
+        Sort Key: (date_trunc('month'::text, booked_at))
+        Sort Method: quicksort  Memory: 334kB
+        Buffers: shared hit=144 read=60
+        ->  Index Only Scan using idx_bookings_discounted_booked_at on bookings b  (cost=0.29..733.50 rows=101 width=11) (actual time=2.368..3.160 rows=4543.00 loops=1)
+              Filter: (EXTRACT(year FROM booked_at) = '2026'::numeric)
+              Rows Removed by Filter: 15857
+              Heap Fetches: 670
+              Index Searches: 1
+              Buffers: shared hit=141 read=60
+Planning:
+  Buffers: shared hit=462
+Planning Time: 0.699 ms
+Execution Time: 3.668 ms
+=== R12 run 2 ===
+GroupAggregate  (cost=736.87..739.39 rows=101 width=48) (actual time=2.550..2.773 rows=6.00 loops=1)
+  Group Key: (date_trunc('month'::text, booked_at))
+  Buffers: shared hit=180
+  ->  Sort  (cost=736.87..737.12 rows=101 width=11) (actual time=2.485..2.568 rows=4543.00 loops=1)
+        Sort Key: (date_trunc('month'::text, booked_at))
+        Sort Method: quicksort  Memory: 334kB
+        Buffers: shared hit=180
+        ->  Index Only Scan using idx_bookings_discounted_booked_at on bookings b  (cost=0.29..733.50 rows=101 width=11) (actual time=1.456..2.306 rows=4543.00 loops=1)
+              Filter: (EXTRACT(year FROM booked_at) = '2026'::numeric)
+              Rows Removed by Filter: 15857
+              Heap Fetches: 657
+              Index Searches: 1
+              Buffers: shared hit=177
+Planning:
+  Buffers: shared hit=462
+Planning Time: 0.672 ms
+Execution Time: 2.799 ms
+=== R12 run 3 ===
+GroupAggregate  (cost=736.87..739.39 rows=101 width=48) (actual time=2.378..2.601 rows=6.00 loops=1)
+  Group Key: (date_trunc('month'::text, booked_at))
+  Buffers: shared hit=180
+  ->  Sort  (cost=736.87..737.12 rows=101 width=11) (actual time=2.314..2.397 rows=4543.00 loops=1)
+        Sort Key: (date_trunc('month'::text, booked_at))
+        Sort Method: quicksort  Memory: 334kB
+        Buffers: shared hit=180
+        ->  Index Only Scan using idx_bookings_discounted_booked_at on bookings b  (cost=0.29..733.50 rows=101 width=11) (actual time=1.334..2.134 rows=4543.00 loops=1)
+              Filter: (EXTRACT(year FROM booked_at) = '2026'::numeric)
+              Rows Removed by Filter: 15857
+              Heap Fetches: 657
+              Index Searches: 1
+              Buffers: shared hit=177
+Planning:
+  Buffers: shared hit=462
+Planning Time: 0.642 ms
+Execution Time: 2.625 ms

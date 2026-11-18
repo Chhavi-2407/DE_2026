@@ -1,0 +1,84 @@
+=== R17 run 1 ===
+Sort  (cost=3334.32..3369.49 rows=14068 width=16) (actual time=8.714..8.716 rows=81.00 loops=1)
+  Sort Key: (count(*)) DESC, b.customer_id
+  Sort Method: quicksort  Memory: 27kB
+  Buffers: shared hit=223
+  ->  HashAggregate  (cost=1837.48..2365.03 rows=14068 width=16) (actual time=7.432..8.699 rows=81.00 loops=1)
+        Group Key: b.customer_id, s.category_id
+        Filter: (count(*) >= 3)
+        Batches: 1  Memory Usage: 2841kB
+        Rows Removed by Filter: 39861
+        Buffers: shared hit=217
+        ->  Hash Join  (cost=2.77..1520.95 rows=42204 width=8) (actual time=0.041..4.052 rows=42145.00 loops=1)
+              Hash Cond: (b.service_id = s.service_id)
+              Buffers: shared hit=217
+              ->  Index Only Scan using idx_bookings_completed_booked_at on bookings b  (cost=0.42..1399.99 rows=42204 width=8) (actual time=0.028..1.608 rows=42145.00 loops=1)
+                    Index Cond: (booked_at >= '2026-01-01 00:00:00+05:30'::timestamp with time zone)
+                    Heap Fetches: 2067
+                    Index Searches: 1
+                    Buffers: shared hit=216
+              ->  Hash  (cost=1.60..1.60 rows=60 width=8) (actual time=0.009..0.010 rows=60.00 loops=1)
+                    Buckets: 1024  Batches: 1  Memory Usage: 11kB
+                    Buffers: shared hit=1
+                    ->  Seq Scan on services s  (cost=0.00..1.60 rows=60 width=8) (actual time=0.003..0.005 rows=60.00 loops=1)
+                          Buffers: shared hit=1
+Planning:
+  Buffers: shared hit=549
+Planning Time: 0.815 ms
+Execution Time: 8.802 ms
+=== R17 run 2 ===
+Sort  (cost=3334.32..3369.49 rows=14068 width=16) (actual time=8.215..8.217 rows=81.00 loops=1)
+  Sort Key: (count(*)) DESC, b.customer_id
+  Sort Method: quicksort  Memory: 27kB
+  Buffers: shared hit=221
+  ->  HashAggregate  (cost=1837.48..2365.03 rows=14068 width=16) (actual time=6.887..8.200 rows=81.00 loops=1)
+        Group Key: b.customer_id, s.category_id
+        Filter: (count(*) >= 3)
+        Batches: 1  Memory Usage: 2841kB
+        Rows Removed by Filter: 39861
+        Buffers: shared hit=215
+        ->  Hash Join  (cost=2.77..1520.95 rows=42204 width=8) (actual time=0.036..3.750 rows=42145.00 loops=1)
+              Hash Cond: (b.service_id = s.service_id)
+              Buffers: shared hit=215
+              ->  Index Only Scan using idx_bookings_completed_booked_at on bookings b  (cost=0.42..1399.99 rows=42204 width=8) (actual time=0.024..1.497 rows=42145.00 loops=1)
+                    Index Cond: (booked_at >= '2026-01-01 00:00:00+05:30'::timestamp with time zone)
+                    Heap Fetches: 2066
+                    Index Searches: 1
+                    Buffers: shared hit=214
+              ->  Hash  (cost=1.60..1.60 rows=60 width=8) (actual time=0.009..0.010 rows=60.00 loops=1)
+                    Buckets: 1024  Batches: 1  Memory Usage: 11kB
+                    Buffers: shared hit=1
+                    ->  Seq Scan on services s  (cost=0.00..1.60 rows=60 width=8) (actual time=0.003..0.005 rows=60.00 loops=1)
+                          Buffers: shared hit=1
+Planning:
+  Buffers: shared hit=549
+Planning Time: 0.727 ms
+Execution Time: 8.299 ms
+=== R17 run 3 ===
+Sort  (cost=3334.32..3369.49 rows=14068 width=16) (actual time=7.919..7.921 rows=81.00 loops=1)
+  Sort Key: (count(*)) DESC, b.customer_id
+  Sort Method: quicksort  Memory: 27kB
+  Buffers: shared hit=221
+  ->  HashAggregate  (cost=1837.48..2365.03 rows=14068 width=16) (actual time=6.726..7.904 rows=81.00 loops=1)
+        Group Key: b.customer_id, s.category_id
+        Filter: (count(*) >= 3)
+        Batches: 1  Memory Usage: 2841kB
+        Rows Removed by Filter: 39861
+        Buffers: shared hit=215
+        ->  Hash Join  (cost=2.77..1520.95 rows=42204 width=8) (actual time=0.035..3.671 rows=42145.00 loops=1)
+              Hash Cond: (b.service_id = s.service_id)
+              Buffers: shared hit=215
+              ->  Index Only Scan using idx_bookings_completed_booked_at on bookings b  (cost=0.42..1399.99 rows=42204 width=8) (actual time=0.023..1.415 rows=42145.00 loops=1)
+                    Index Cond: (booked_at >= '2026-01-01 00:00:00+05:30'::timestamp with time zone)
+                    Heap Fetches: 2066
+                    Index Searches: 1
+                    Buffers: shared hit=214
+              ->  Hash  (cost=1.60..1.60 rows=60 width=8) (actual time=0.009..0.009 rows=60.00 loops=1)
+                    Buckets: 1024  Batches: 1  Memory Usage: 11kB
+                    Buffers: shared hit=1
+                    ->  Seq Scan on services s  (cost=0.00..1.60 rows=60 width=8) (actual time=0.003..0.005 rows=60.00 loops=1)
+                          Buffers: shared hit=1
+Planning:
+  Buffers: shared hit=549
+Planning Time: 0.720 ms
+Execution Time: 8.000 ms

@@ -1,0 +1,123 @@
+=== R25 run 1 ===
+Limit  (cost=18589.87..18589.95 rows=30 width=68) (actual time=2.207..2.209 rows=30.00 loops=1)
+  Buffers: shared hit=1218
+  ->  Sort  (cost=18589.87..18595.15 rows=2112 width=68) (actual time=2.207..2.208 rows=30.00 loops=1)
+        Sort Key: (COALESCE((SubPlan 1), '0'::numeric)) DESC
+        Sort Method: top-N heapsort  Memory: 26kB
+        Buffers: shared hit=1218
+        ->  HashAggregate  (cost=617.74..18527.50 rows=2112 width=68) (actual time=1.405..2.162 rows=357.00 loops=1)
+              Group Key: a.pro_id
+              Batches: 1  Memory Usage: 225kB
+              Buffers: shared hit=1215
+              ->  Hash Join  (cost=28.70..591.34 rows=2112 width=20) (actual time=0.054..1.084 rows=2142.00 loops=1)
+                    Hash Cond: (a.pro_id = p.pro_id)
+                    Buffers: shared hit=75
+                    ->  Index Only Scan using idx_pro_availability_work_date_pro on pro_availability a  (cost=0.42..528.36 rows=13197 width=20) (actual time=0.008..0.537 rows=13320.00 loops=1)
+                          Index Cond: ((work_date >= '2026-06-22'::date) AND (work_date <= '2026-06-28'::date))
+                          Heap Fetches: 0
+                          Index Searches: 1
+                          Buffers: shared hit=70
+                    ->  Hash  (cost=23.28..23.28 rows=400 width=4) (actual time=0.042..0.042 rows=400.00 loops=1)
+                          Buckets: 1024  Batches: 1  Memory Usage: 23kB
+                          Buffers: shared hit=5
+                          ->  Index Only Scan using idx_professionals_city_status_rating on professionals p  (cost=0.28..23.28 rows=400 width=4) (actual time=0.007..0.027 rows=400.00 loops=1)
+                                Index Cond: (city_id = 1)
+                                Heap Fetches: 0
+                                Index Searches: 1
+                                Buffers: shared hit=5
+              SubPlan 1
+                ->  Aggregate  (cost=8.46..8.47 rows=1 width=32) (actual time=0.002..0.002 rows=1.00 loops=357)
+                      Buffers: shared hit=1140
+                      ->  Index Only Scan using idx_bookings_pro_scheduled_start on bookings b  (cost=0.42..8.44 rows=1 width=16) (actual time=0.002..0.002 rows=0.78 loops=357)
+                            Index Cond: ((pro_id = a.pro_id) AND (scheduled_start >= '2026-06-22 00:00:00+05:30'::timestamp with time zone) AND (scheduled_start < '2026-06-29 00:00:00+05:30'::timestamp with time zone))
+                            Filter: ((status)::text = 'COMPLETED'::text)
+                            Rows Removed by Filter: 0
+                            Heap Fetches: 67
+                            Index Searches: 357
+                            Buffers: shared hit=1140
+Planning:
+  Buffers: shared hit=643
+Planning Time: 0.966 ms
+Execution Time: 2.265 ms
+=== R25 run 2 ===
+Limit  (cost=18589.87..18589.95 rows=30 width=68) (actual time=2.210..2.212 rows=30.00 loops=1)
+  Buffers: shared hit=1218
+  ->  Sort  (cost=18589.87..18595.15 rows=2112 width=68) (actual time=2.209..2.210 rows=30.00 loops=1)
+        Sort Key: (COALESCE((SubPlan 1), '0'::numeric)) DESC
+        Sort Method: top-N heapsort  Memory: 26kB
+        Buffers: shared hit=1218
+        ->  HashAggregate  (cost=617.74..18527.50 rows=2112 width=68) (actual time=1.380..2.156 rows=357.00 loops=1)
+              Group Key: a.pro_id
+              Batches: 1  Memory Usage: 225kB
+              Buffers: shared hit=1215
+              ->  Hash Join  (cost=28.70..591.34 rows=2112 width=20) (actual time=0.053..1.058 rows=2142.00 loops=1)
+                    Hash Cond: (a.pro_id = p.pro_id)
+                    Buffers: shared hit=75
+                    ->  Index Only Scan using idx_pro_availability_work_date_pro on pro_availability a  (cost=0.42..528.36 rows=13197 width=20) (actual time=0.007..0.510 rows=13320.00 loops=1)
+                          Index Cond: ((work_date >= '2026-06-22'::date) AND (work_date <= '2026-06-28'::date))
+                          Heap Fetches: 0
+                          Index Searches: 1
+                          Buffers: shared hit=70
+                    ->  Hash  (cost=23.28..23.28 rows=400 width=4) (actual time=0.042..0.042 rows=400.00 loops=1)
+                          Buckets: 1024  Batches: 1  Memory Usage: 23kB
+                          Buffers: shared hit=5
+                          ->  Index Only Scan using idx_professionals_city_status_rating on professionals p  (cost=0.28..23.28 rows=400 width=4) (actual time=0.006..0.027 rows=400.00 loops=1)
+                                Index Cond: (city_id = 1)
+                                Heap Fetches: 0
+                                Index Searches: 1
+                                Buffers: shared hit=5
+              SubPlan 1
+                ->  Aggregate  (cost=8.46..8.47 rows=1 width=32) (actual time=0.002..0.002 rows=1.00 loops=357)
+                      Buffers: shared hit=1140
+                      ->  Index Only Scan using idx_bookings_pro_scheduled_start on bookings b  (cost=0.42..8.44 rows=1 width=16) (actual time=0.002..0.002 rows=0.78 loops=357)
+                            Index Cond: ((pro_id = a.pro_id) AND (scheduled_start >= '2026-06-22 00:00:00+05:30'::timestamp with time zone) AND (scheduled_start < '2026-06-29 00:00:00+05:30'::timestamp with time zone))
+                            Filter: ((status)::text = 'COMPLETED'::text)
+                            Rows Removed by Filter: 0
+                            Heap Fetches: 67
+                            Index Searches: 357
+                            Buffers: shared hit=1140
+Planning:
+  Buffers: shared hit=643
+Planning Time: 1.002 ms
+Execution Time: 2.263 ms
+=== R25 run 3 ===
+Limit  (cost=18589.87..18589.95 rows=30 width=68) (actual time=2.121..2.123 rows=30.00 loops=1)
+  Buffers: shared hit=1218
+  ->  Sort  (cost=18589.87..18595.15 rows=2112 width=68) (actual time=2.120..2.121 rows=30.00 loops=1)
+        Sort Key: (COALESCE((SubPlan 1), '0'::numeric)) DESC
+        Sort Method: top-N heapsort  Memory: 26kB
+        Buffers: shared hit=1218
+        ->  HashAggregate  (cost=617.74..18527.50 rows=2112 width=68) (actual time=1.329..2.078 rows=357.00 loops=1)
+              Group Key: a.pro_id
+              Batches: 1  Memory Usage: 225kB
+              Buffers: shared hit=1215
+              ->  Hash Join  (cost=28.70..591.34 rows=2112 width=20) (actual time=0.050..1.005 rows=2142.00 loops=1)
+                    Hash Cond: (a.pro_id = p.pro_id)
+                    Buffers: shared hit=75
+                    ->  Index Only Scan using idx_pro_availability_work_date_pro on pro_availability a  (cost=0.42..528.36 rows=13197 width=20) (actual time=0.006..0.487 rows=13320.00 loops=1)
+                          Index Cond: ((work_date >= '2026-06-22'::date) AND (work_date <= '2026-06-28'::date))
+                          Heap Fetches: 0
+                          Index Searches: 1
+                          Buffers: shared hit=70
+                    ->  Hash  (cost=23.28..23.28 rows=400 width=4) (actual time=0.040..0.040 rows=400.00 loops=1)
+                          Buckets: 1024  Batches: 1  Memory Usage: 23kB
+                          Buffers: shared hit=5
+                          ->  Index Only Scan using idx_professionals_city_status_rating on professionals p  (cost=0.28..23.28 rows=400 width=4) (actual time=0.006..0.025 rows=400.00 loops=1)
+                                Index Cond: (city_id = 1)
+                                Heap Fetches: 0
+                                Index Searches: 1
+                                Buffers: shared hit=5
+              SubPlan 1
+                ->  Aggregate  (cost=8.46..8.47 rows=1 width=32) (actual time=0.002..0.002 rows=1.00 loops=357)
+                      Buffers: shared hit=1140
+                      ->  Index Only Scan using idx_bookings_pro_scheduled_start on bookings b  (cost=0.42..8.44 rows=1 width=16) (actual time=0.002..0.002 rows=0.78 loops=357)
+                            Index Cond: ((pro_id = a.pro_id) AND (scheduled_start >= '2026-06-22 00:00:00+05:30'::timestamp with time zone) AND (scheduled_start < '2026-06-29 00:00:00+05:30'::timestamp with time zone))
+                            Filter: ((status)::text = 'COMPLETED'::text)
+                            Rows Removed by Filter: 0
+                            Heap Fetches: 67
+                            Index Searches: 357
+                            Buffers: shared hit=1140
+Planning:
+  Buffers: shared hit=643
+Planning Time: 1.082 ms
+Execution Time: 2.170 ms
