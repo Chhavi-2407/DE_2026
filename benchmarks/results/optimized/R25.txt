@@ -1,0 +1,153 @@
+=== R25 run 1 ===
+Limit  (cost=7968.36..7968.44 rows=30 width=68) (actual time=39.106..39.385 rows=30.00 loops=1)
+  Buffers: shared hit=3060
+  ->  Sort  (cost=7968.36..7973.68 rows=2128 width=68) (actual time=39.105..39.382 rows=30.00 loops=1)
+        Sort Key: (COALESCE((sum((EXTRACT(epoch FROM (b.scheduled_end - b.scheduled_start)) / '60'::numeric))), '0'::numeric)) DESC
+        Sort Method: top-N heapsort  Memory: 26kB
+        Buffers: shared hit=3060
+        ->  Hash Right Join  (cost=7695.19..7905.51 rows=2128 width=68) (actual time=38.126..39.304 rows=357.00 loops=1)
+              Hash Cond: (b.pro_id = a.pro_id)
+              Buffers: shared hit=3057
+              ->  GroupAggregate  (cost=6012.06..6208.91 rows=1067 width=36) (actual time=32.487..33.517 rows=1080.00 loops=1)
+                    Group Key: b.pro_id
+                    Buffers: shared hit=2581
+                    ->  Gather Merge  (cost=6012.06..6177.43 rows=1451 width=20) (actual time=32.475..32.919 rows=1638.00 loops=1)
+                          Workers Planned: 1
+                          Workers Launched: 1
+                          Buffers: shared hit=2581
+                          ->  Sort  (cost=5012.05..5014.19 rows=854 width=20) (actual time=30.693..30.723 rows=819.00 loops=2)
+                                Sort Key: b.pro_id
+                                Sort Method: quicksort  Memory: 56kB
+                                Buffers: shared hit=2581
+                                Worker 0:  Sort Method: quicksort  Memory: 56kB
+                                ->  Parallel Seq Scan on bookings b  (cost=0.00..4970.47 rows=854 width=20) (actual time=29.505..30.545 rows=819.00 loops=2)
+                                      Filter: (((status)::text = 'COMPLETED'::text) AND (scheduled_start >= ('2026-06-22 00:00:00'::timestamp without time zone AT TIME ZONE current_setting('TimeZone'::text))) AND (scheduled_start < ('2026-06-29 00:00:00'::timestamp without time zone AT TIME ZONE current_setting('TimeZone'::text))))
+                                      Rows Removed by Filter: 74181
+                                      Buffers: shared hit=2544
+              ->  Hash  (cost=1656.52..1656.52 rows=2128 width=36) (actual time=5.625..5.626 rows=357.00 loops=1)
+                    Buckets: 4096  Batches: 1  Memory Usage: 47kB
+                    Buffers: shared hit=476
+                    ->  HashAggregate  (cost=1629.92..1656.52 rows=2128 width=36) (actual time=5.519..5.585 rows=357.00 loops=1)
+                          Group Key: a.pro_id
+                          Batches: 1  Memory Usage: 225kB
+                          Buffers: shared hit=476
+                          ->  Hash Join  (cost=63.25..1603.32 rows=2128 width=20) (actual time=0.215..4.909 rows=2142.00 loops=1)
+                                Hash Cond: (a.pro_id = p.pro_id)
+                                Buffers: shared hit=476
+                                ->  Seq Scan on pro_availability a  (cost=0.00..1505.11 rows=13300 width=20) (actual time=0.012..3.798 rows=13320.00 loops=1)
+                                      Filter: ((work_date >= '2026-06-22'::date) AND (work_date <= '2026-06-28'::date))
+                                      Rows Removed by Filter: 57087
+                                      Buffers: shared hit=449
+                                ->  Hash  (cost=58.25..58.25 rows=400 width=4) (actual time=0.194..0.195 rows=400.00 loops=1)
+                                      Buckets: 1024  Batches: 1  Memory Usage: 23kB
+                                      Buffers: shared hit=27
+                                      ->  Seq Scan on professionals p  (cost=0.00..58.25 rows=400 width=4) (actual time=0.006..0.165 rows=400.00 loops=1)
+                                            Filter: (city_id = 1)
+                                            Rows Removed by Filter: 2100
+                                            Buffers: shared hit=27
+Planning:
+  Buffers: shared hit=250
+Planning Time: 1.002 ms
+Execution Time: 39.511 ms
+=== R25 run 2 ===
+Limit  (cost=7968.36..7968.44 rows=30 width=68) (actual time=38.548..39.031 rows=30.00 loops=1)
+  Buffers: shared hit=3060
+  ->  Sort  (cost=7968.36..7973.68 rows=2128 width=68) (actual time=38.546..39.028 rows=30.00 loops=1)
+        Sort Key: (COALESCE((sum((EXTRACT(epoch FROM (b.scheduled_end - b.scheduled_start)) / '60'::numeric))), '0'::numeric)) DESC
+        Sort Method: top-N heapsort  Memory: 26kB
+        Buffers: shared hit=3060
+        ->  Hash Right Join  (cost=7695.19..7905.51 rows=2128 width=68) (actual time=37.582..38.951 rows=357.00 loops=1)
+              Hash Cond: (b.pro_id = a.pro_id)
+              Buffers: shared hit=3057
+              ->  GroupAggregate  (cost=6012.06..6208.91 rows=1067 width=36) (actual time=32.189..33.413 rows=1080.00 loops=1)
+                    Group Key: b.pro_id
+                    Buffers: shared hit=2581
+                    ->  Gather Merge  (cost=6012.06..6177.43 rows=1451 width=20) (actual time=32.177..32.828 rows=1638.00 loops=1)
+                          Workers Planned: 1
+                          Workers Launched: 1
+                          Buffers: shared hit=2581
+                          ->  Sort  (cost=5012.05..5014.19 rows=854 width=20) (actual time=30.428..30.457 rows=819.00 loops=2)
+                                Sort Key: b.pro_id
+                                Sort Method: quicksort  Memory: 56kB
+                                Buffers: shared hit=2581
+                                Worker 0:  Sort Method: quicksort  Memory: 56kB
+                                ->  Parallel Seq Scan on bookings b  (cost=0.00..4970.47 rows=854 width=20) (actual time=29.211..30.274 rows=819.00 loops=2)
+                                      Filter: (((status)::text = 'COMPLETED'::text) AND (scheduled_start >= ('2026-06-22 00:00:00'::timestamp without time zone AT TIME ZONE current_setting('TimeZone'::text))) AND (scheduled_start < ('2026-06-29 00:00:00'::timestamp without time zone AT TIME ZONE current_setting('TimeZone'::text))))
+                                      Rows Removed by Filter: 74181
+                                      Buffers: shared hit=2544
+              ->  Hash  (cost=1656.52..1656.52 rows=2128 width=36) (actual time=5.380..5.381 rows=357.00 loops=1)
+                    Buckets: 4096  Batches: 1  Memory Usage: 47kB
+                    Buffers: shared hit=476
+                    ->  HashAggregate  (cost=1629.92..1656.52 rows=2128 width=36) (actual time=5.271..5.338 rows=357.00 loops=1)
+                          Group Key: a.pro_id
+                          Batches: 1  Memory Usage: 225kB
+                          Buffers: shared hit=476
+                          ->  Hash Join  (cost=63.25..1603.32 rows=2128 width=20) (actual time=0.213..4.638 rows=2142.00 loops=1)
+                                Hash Cond: (a.pro_id = p.pro_id)
+                                Buffers: shared hit=476
+                                ->  Seq Scan on pro_availability a  (cost=0.00..1505.11 rows=13300 width=20) (actual time=0.010..3.521 rows=13320.00 loops=1)
+                                      Filter: ((work_date >= '2026-06-22'::date) AND (work_date <= '2026-06-28'::date))
+                                      Rows Removed by Filter: 57087
+                                      Buffers: shared hit=449
+                                ->  Hash  (cost=58.25..58.25 rows=400 width=4) (actual time=0.195..0.195 rows=400.00 loops=1)
+                                      Buckets: 1024  Batches: 1  Memory Usage: 23kB
+                                      Buffers: shared hit=27
+                                      ->  Seq Scan on professionals p  (cost=0.00..58.25 rows=400 width=4) (actual time=0.005..0.166 rows=400.00 loops=1)
+                                            Filter: (city_id = 1)
+                                            Rows Removed by Filter: 2100
+                                            Buffers: shared hit=27
+Planning:
+  Buffers: shared hit=250
+Planning Time: 0.996 ms
+Execution Time: 39.115 ms
+=== R25 run 3 ===
+Limit  (cost=7968.36..7968.44 rows=30 width=68) (actual time=39.409..39.641 rows=30.00 loops=1)
+  Buffers: shared hit=3060
+  ->  Sort  (cost=7968.36..7973.68 rows=2128 width=68) (actual time=39.408..39.638 rows=30.00 loops=1)
+        Sort Key: (COALESCE((sum((EXTRACT(epoch FROM (b.scheduled_end - b.scheduled_start)) / '60'::numeric))), '0'::numeric)) DESC
+        Sort Method: top-N heapsort  Memory: 26kB
+        Buffers: shared hit=3060
+        ->  Hash Right Join  (cost=7695.19..7905.51 rows=2128 width=68) (actual time=38.430..39.563 rows=357.00 loops=1)
+              Hash Cond: (b.pro_id = a.pro_id)
+              Buffers: shared hit=3057
+              ->  GroupAggregate  (cost=6012.06..6208.91 rows=1067 width=36) (actual time=33.037..34.024 rows=1080.00 loops=1)
+                    Group Key: b.pro_id
+                    Buffers: shared hit=2581
+                    ->  Gather Merge  (cost=6012.06..6177.43 rows=1451 width=20) (actual time=33.027..33.423 rows=1638.00 loops=1)
+                          Workers Planned: 1
+                          Workers Launched: 1
+                          Buffers: shared hit=2581
+                          ->  Sort  (cost=5012.05..5014.19 rows=854 width=20) (actual time=31.287..31.317 rows=819.00 loops=2)
+                                Sort Key: b.pro_id
+                                Sort Method: quicksort  Memory: 55kB
+                                Buffers: shared hit=2581
+                                Worker 0:  Sort Method: quicksort  Memory: 58kB
+                                ->  Parallel Seq Scan on bookings b  (cost=0.00..4970.47 rows=854 width=20) (actual time=30.007..31.139 rows=819.00 loops=2)
+                                      Filter: (((status)::text = 'COMPLETED'::text) AND (scheduled_start >= ('2026-06-22 00:00:00'::timestamp without time zone AT TIME ZONE current_setting('TimeZone'::text))) AND (scheduled_start < ('2026-06-29 00:00:00'::timestamp without time zone AT TIME ZONE current_setting('TimeZone'::text))))
+                                      Rows Removed by Filter: 74181
+                                      Buffers: shared hit=2544
+              ->  Hash  (cost=1656.52..1656.52 rows=2128 width=36) (actual time=5.378..5.380 rows=357.00 loops=1)
+                    Buckets: 4096  Batches: 1  Memory Usage: 47kB
+                    Buffers: shared hit=476
+                    ->  HashAggregate  (cost=1629.92..1656.52 rows=2128 width=36) (actual time=5.271..5.337 rows=357.00 loops=1)
+                          Group Key: a.pro_id
+                          Batches: 1  Memory Usage: 225kB
+                          Buffers: shared hit=476
+                          ->  Hash Join  (cost=63.25..1603.32 rows=2128 width=20) (actual time=0.210..4.648 rows=2142.00 loops=1)
+                                Hash Cond: (a.pro_id = p.pro_id)
+                                Buffers: shared hit=476
+                                ->  Seq Scan on pro_availability a  (cost=0.00..1505.11 rows=13300 width=20) (actual time=0.009..3.471 rows=13320.00 loops=1)
+                                      Filter: ((work_date >= '2026-06-22'::date) AND (work_date <= '2026-06-28'::date))
+                                      Rows Removed by Filter: 57087
+                                      Buffers: shared hit=449
+                                ->  Hash  (cost=58.25..58.25 rows=400 width=4) (actual time=0.192..0.192 rows=400.00 loops=1)
+                                      Buckets: 1024  Batches: 1  Memory Usage: 23kB
+                                      Buffers: shared hit=27
+                                      ->  Seq Scan on professionals p  (cost=0.00..58.25 rows=400 width=4) (actual time=0.005..0.160 rows=400.00 loops=1)
+                                            Filter: (city_id = 1)
+                                            Rows Removed by Filter: 2100
+                                            Buffers: shared hit=27
+Planning:
+  Buffers: shared hit=250
+Planning Time: 0.868 ms
+Execution Time: 39.724 ms

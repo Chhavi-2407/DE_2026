@@ -1,0 +1,63 @@
+=== R12 run 1 ===
+GroupAggregate  (cost=6218.48..7141.97 rows=6767 width=48) (actual time=17.021..18.308 rows=6.00 loops=1)
+  Group Key: (date_trunc('month'::text, booked_at))
+  Buffers: shared hit=2582
+  ->  Gather Merge  (cost=6218.48..6989.72 rows=6767 width=11) (actual time=16.822..17.926 rows=4543.00 loops=1)
+        Workers Planned: 1
+        Workers Launched: 1
+        Buffers: shared hit=2582
+        ->  Sort  (cost=5218.47..5228.42 rows=3981 width=11) (actual time=15.015..15.107 rows=2271.50 loops=2)
+              Sort Key: (date_trunc('month'::text, booked_at))
+              Sort Method: quicksort  Memory: 173kB
+              Buffers: shared hit=2582
+              Worker 0:  Sort Method: quicksort  Memory: 162kB
+              ->  Parallel Seq Scan on bookings b  (cost=0.00..4980.42 rows=3981 width=11) (actual time=9.380..14.779 rows=2271.50 loops=2)
+                    Filter: ((discount > '0'::numeric) AND (booked_at >= ('2026-01-01 00:00:00'::timestamp without time zone AT TIME ZONE current_setting('TimeZone'::text))) AND (booked_at < ('2027-01-01 00:00:00'::timestamp without time zone AT TIME ZONE current_setting('TimeZone'::text))))
+                    Rows Removed by Filter: 72728
+                    Buffers: shared hit=2544
+Planning:
+  Buffers: shared hit=130
+Planning Time: 0.397 ms
+Execution Time: 18.354 ms
+=== R12 run 2 ===
+GroupAggregate  (cost=6218.48..7141.97 rows=6767 width=48) (actual time=17.088..18.461 rows=6.00 loops=1)
+  Group Key: (date_trunc('month'::text, booked_at))
+  Buffers: shared hit=2582
+  ->  Gather Merge  (cost=6218.48..6989.72 rows=6767 width=11) (actual time=16.835..18.057 rows=4543.00 loops=1)
+        Workers Planned: 1
+        Workers Launched: 1
+        Buffers: shared hit=2582
+        ->  Sort  (cost=5218.47..5228.42 rows=3981 width=11) (actual time=14.854..14.954 rows=2271.50 loops=2)
+              Sort Key: (date_trunc('month'::text, booked_at))
+              Sort Method: quicksort  Memory: 169kB
+              Buffers: shared hit=2582
+              Worker 0:  Sort Method: quicksort  Memory: 166kB
+              ->  Parallel Seq Scan on bookings b  (cost=0.00..4980.42 rows=3981 width=11) (actual time=9.562..14.631 rows=2271.50 loops=2)
+                    Filter: ((discount > '0'::numeric) AND (booked_at >= ('2026-01-01 00:00:00'::timestamp without time zone AT TIME ZONE current_setting('TimeZone'::text))) AND (booked_at < ('2027-01-01 00:00:00'::timestamp without time zone AT TIME ZONE current_setting('TimeZone'::text))))
+                    Rows Removed by Filter: 72728
+                    Buffers: shared hit=2544
+Planning:
+  Buffers: shared hit=130
+Planning Time: 0.407 ms
+Execution Time: 18.514 ms
+=== R12 run 3 ===
+GroupAggregate  (cost=6218.48..7141.97 rows=6767 width=48) (actual time=17.819..19.174 rows=6.00 loops=1)
+  Group Key: (date_trunc('month'::text, booked_at))
+  Buffers: shared hit=2582
+  ->  Gather Merge  (cost=6218.48..6989.72 rows=6767 width=11) (actual time=17.641..18.824 rows=4543.00 loops=1)
+        Workers Planned: 1
+        Workers Launched: 1
+        Buffers: shared hit=2582
+        ->  Sort  (cost=5218.47..5228.42 rows=3981 width=11) (actual time=15.510..15.599 rows=2271.50 loops=2)
+              Sort Key: (date_trunc('month'::text, booked_at))
+              Sort Method: quicksort  Memory: 168kB
+              Buffers: shared hit=2582
+              Worker 0:  Sort Method: quicksort  Memory: 167kB
+              ->  Parallel Seq Scan on bookings b  (cost=0.00..4980.42 rows=3981 width=11) (actual time=9.950..15.262 rows=2271.50 loops=2)
+                    Filter: ((discount > '0'::numeric) AND (booked_at >= ('2026-01-01 00:00:00'::timestamp without time zone AT TIME ZONE current_setting('TimeZone'::text))) AND (booked_at < ('2027-01-01 00:00:00'::timestamp without time zone AT TIME ZONE current_setting('TimeZone'::text))))
+                    Rows Removed by Filter: 72728
+                    Buffers: shared hit=2544
+Planning:
+  Buffers: shared hit=130
+Planning Time: 0.419 ms
+Execution Time: 19.226 ms

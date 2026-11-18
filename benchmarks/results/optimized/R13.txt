@@ -1,0 +1,57 @@
+=== R13 run 1 ===
+Hash Right Anti Join  (cost=86.00..4652.58 rows=263 width=22) (actual time=14.771..14.828 rows=377.00 loops=1)
+  Hash Cond: (b.pro_id = p.pro_id)
+  Buffers: shared hit=2571
+  ->  Seq Scan on bookings b  (cost=0.00..4419.00 rows=11870 width=4) (actual time=0.011..13.345 rows=12123.00 loops=1)
+        Filter: ((status)::text = 'CANCELLED_BY_CUSTOMER'::text)
+        Rows Removed by Filter: 137877
+        Buffers: shared hit=2544
+  ->  Hash  (cost=58.25..58.25 rows=2220 width=22) (actual time=0.557..0.558 rows=2220.00 loops=1)
+        Buckets: 4096  Batches: 1  Memory Usage: 152kB
+        Buffers: shared hit=27
+        ->  Seq Scan on professionals p  (cost=0.00..58.25 rows=2220 width=22) (actual time=0.015..0.301 rows=2220.00 loops=1)
+              Filter: ((status)::text = 'ACTIVE'::text)
+              Rows Removed by Filter: 280
+              Buffers: shared hit=27
+Planning:
+  Buffers: shared hit=214
+Planning Time: 0.568 ms
+Execution Time: 14.881 ms
+=== R13 run 2 ===
+Hash Right Anti Join  (cost=86.00..4652.58 rows=263 width=22) (actual time=14.958..15.018 rows=377.00 loops=1)
+  Hash Cond: (b.pro_id = p.pro_id)
+  Buffers: shared hit=2571
+  ->  Seq Scan on bookings b  (cost=0.00..4419.00 rows=11870 width=4) (actual time=0.008..13.546 rows=12123.00 loops=1)
+        Filter: ((status)::text = 'CANCELLED_BY_CUSTOMER'::text)
+        Rows Removed by Filter: 137877
+        Buffers: shared hit=2544
+  ->  Hash  (cost=58.25..58.25 rows=2220 width=22) (actual time=0.558..0.559 rows=2220.00 loops=1)
+        Buckets: 4096  Batches: 1  Memory Usage: 152kB
+        Buffers: shared hit=27
+        ->  Seq Scan on professionals p  (cost=0.00..58.25 rows=2220 width=22) (actual time=0.006..0.301 rows=2220.00 loops=1)
+              Filter: ((status)::text = 'ACTIVE'::text)
+              Rows Removed by Filter: 280
+              Buffers: shared hit=27
+Planning:
+  Buffers: shared hit=214
+Planning Time: 0.577 ms
+Execution Time: 15.073 ms
+=== R13 run 3 ===
+Hash Right Anti Join  (cost=86.00..4652.58 rows=263 width=22) (actual time=15.440..15.500 rows=377.00 loops=1)
+  Hash Cond: (b.pro_id = p.pro_id)
+  Buffers: shared hit=2571
+  ->  Seq Scan on bookings b  (cost=0.00..4419.00 rows=11870 width=4) (actual time=0.008..14.027 rows=12123.00 loops=1)
+        Filter: ((status)::text = 'CANCELLED_BY_CUSTOMER'::text)
+        Rows Removed by Filter: 137877
+        Buffers: shared hit=2544
+  ->  Hash  (cost=58.25..58.25 rows=2220 width=22) (actual time=0.542..0.542 rows=2220.00 loops=1)
+        Buckets: 4096  Batches: 1  Memory Usage: 152kB
+        Buffers: shared hit=27
+        ->  Seq Scan on professionals p  (cost=0.00..58.25 rows=2220 width=22) (actual time=0.005..0.297 rows=2220.00 loops=1)
+              Filter: ((status)::text = 'ACTIVE'::text)
+              Rows Removed by Filter: 280
+              Buffers: shared hit=27
+Planning:
+  Buffers: shared hit=214
+Planning Time: 0.573 ms
+Execution Time: 15.554 ms

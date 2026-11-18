@@ -1,0 +1,108 @@
+=== R19 run 1 ===
+Sort  (cost=5577.43..5578.31 rows=355 width=338) (actual time=30.581..30.594 rows=357.00 loops=1)
+  Sort Key: (COALESCE((count(*) FILTER (WHERE (((b.status)::text = 'COMPLETED'::text) AND (b.scheduled_start >= ('2026-06-01 00:00:00'::timestamp without time zone AT TIME ZONE current_setting('TimeZone'::text))) AND (b.scheduled_start < ('2026-07-01 00:00:00'::timestamp without time zone AT TIME ZONE current_setting('TimeZone'::text)))))), '0'::bigint)) DESC
+  Sort Method: quicksort  Memory: 42kB
+  Buffers: shared hit=2574
+  CTE active_bengaluru_pros
+    ->  Seq Scan on professionals p_2  (cost=0.00..64.50 rows=355 width=16) (actual time=0.008..0.204 rows=357.00 loops=1)
+          Filter: ((city_id = 1) AND ((status)::text = 'ACTIVE'::text))
+          Rows Removed by Filter: 2143
+          Buffers: shared hit=27
+  ->  Hash Right Join  (cost=5441.99..5497.89 rows=355 width=338) (actual time=30.415..30.522 rows=357.00 loops=1)
+        Hash Cond: (b.pro_id = p.pro_id)
+        Buffers: shared hit=2571
+        ->  HashAggregate  (cost=5430.46..5452.50 rows=2204 width=20) (actual time=30.116..30.162 rows=357.00 loops=1)
+              Group Key: b.pro_id
+              Batches: 1  Memory Usage: 121kB
+              Buffers: shared hit=2544
+              ->  Hash Join  (cost=11.54..4850.16 rows=23212 width=31) (actual time=0.059..19.960 rows=22891.00 loops=1)
+                    Hash Cond: (b.pro_id = p_1.pro_id)
+                    Buffers: shared hit=2544
+                    ->  Seq Scan on bookings b  (cost=0.00..4044.00 rows=150000 width=31) (actual time=0.004..7.925 rows=150000.00 loops=1)
+                          Buffers: shared hit=2544
+                    ->  Hash  (cost=7.10..7.10 rows=355 width=4) (actual time=0.049..0.049 rows=357.00 loops=1)
+                          Buckets: 1024  Batches: 1  Memory Usage: 21kB
+                          ->  CTE Scan on active_bengaluru_pros p_1  (cost=0.00..7.10 rows=355 width=4) (actual time=0.001..0.025 rows=357.00 loops=1)
+                                Storage: Memory  Maximum Storage: 31kB
+        ->  Hash  (cost=7.10..7.10 rows=355 width=322) (actual time=0.294..0.294 rows=357.00 loops=1)
+              Buckets: 1024  Batches: 1  Memory Usage: 25kB
+              Buffers: shared hit=27
+              ->  CTE Scan on active_bengaluru_pros p  (cost=0.00..7.10 rows=355 width=322) (actual time=0.010..0.272 rows=357.00 loops=1)
+                    Storage: Memory  Maximum Storage: 31kB
+                    Buffers: shared hit=27
+Planning:
+  Buffers: shared hit=154
+Planning Time: 0.593 ms
+Execution Time: 30.675 ms
+=== R19 run 2 ===
+Sort  (cost=5577.43..5578.31 rows=355 width=338) (actual time=31.214..31.228 rows=357.00 loops=1)
+  Sort Key: (COALESCE((count(*) FILTER (WHERE (((b.status)::text = 'COMPLETED'::text) AND (b.scheduled_start >= ('2026-06-01 00:00:00'::timestamp without time zone AT TIME ZONE current_setting('TimeZone'::text))) AND (b.scheduled_start < ('2026-07-01 00:00:00'::timestamp without time zone AT TIME ZONE current_setting('TimeZone'::text)))))), '0'::bigint)) DESC
+  Sort Method: quicksort  Memory: 42kB
+  Buffers: shared hit=2574
+  CTE active_bengaluru_pros
+    ->  Seq Scan on professionals p_2  (cost=0.00..64.50 rows=355 width=16) (actual time=0.012..0.308 rows=357.00 loops=1)
+          Filter: ((city_id = 1) AND ((status)::text = 'ACTIVE'::text))
+          Rows Removed by Filter: 2143
+          Buffers: shared hit=27
+  ->  Hash Right Join  (cost=5441.99..5497.89 rows=355 width=338) (actual time=31.035..31.151 rows=357.00 loops=1)
+        Hash Cond: (b.pro_id = p.pro_id)
+        Buffers: shared hit=2571
+        ->  HashAggregate  (cost=5430.46..5452.50 rows=2204 width=20) (actual time=30.602..30.648 rows=357.00 loops=1)
+              Group Key: b.pro_id
+              Batches: 1  Memory Usage: 121kB
+              Buffers: shared hit=2544
+              ->  Hash Join  (cost=11.54..4850.16 rows=23212 width=31) (actual time=0.065..20.423 rows=22891.00 loops=1)
+                    Hash Cond: (b.pro_id = p_1.pro_id)
+                    Buffers: shared hit=2544
+                    ->  Seq Scan on bookings b  (cost=0.00..4044.00 rows=150000 width=31) (actual time=0.008..8.207 rows=150000.00 loops=1)
+                          Buffers: shared hit=2544
+                    ->  Hash  (cost=7.10..7.10 rows=355 width=4) (actual time=0.049..0.050 rows=357.00 loops=1)
+                          Buckets: 1024  Batches: 1  Memory Usage: 21kB
+                          ->  CTE Scan on active_bengaluru_pros p_1  (cost=0.00..7.10 rows=355 width=4) (actual time=0.001..0.026 rows=357.00 loops=1)
+                                Storage: Memory  Maximum Storage: 31kB
+        ->  Hash  (cost=7.10..7.10 rows=355 width=322) (actual time=0.428..0.428 rows=357.00 loops=1)
+              Buckets: 1024  Batches: 1  Memory Usage: 25kB
+              Buffers: shared hit=27
+              ->  CTE Scan on active_bengaluru_pros p  (cost=0.00..7.10 rows=355 width=322) (actual time=0.015..0.393 rows=357.00 loops=1)
+                    Storage: Memory  Maximum Storage: 31kB
+                    Buffers: shared hit=27
+Planning:
+  Buffers: shared hit=154
+Planning Time: 0.893 ms
+Execution Time: 31.354 ms
+=== R19 run 3 ===
+Sort  (cost=5577.43..5578.31 rows=355 width=338) (actual time=33.555..33.570 rows=357.00 loops=1)
+  Sort Key: (COALESCE((count(*) FILTER (WHERE (((b.status)::text = 'COMPLETED'::text) AND (b.scheduled_start >= ('2026-06-01 00:00:00'::timestamp without time zone AT TIME ZONE current_setting('TimeZone'::text))) AND (b.scheduled_start < ('2026-07-01 00:00:00'::timestamp without time zone AT TIME ZONE current_setting('TimeZone'::text)))))), '0'::bigint)) DESC
+  Sort Method: quicksort  Memory: 42kB
+  Buffers: shared hit=2574
+  CTE active_bengaluru_pros
+    ->  Seq Scan on professionals p_2  (cost=0.00..64.50 rows=355 width=16) (actual time=0.010..0.229 rows=357.00 loops=1)
+          Filter: ((city_id = 1) AND ((status)::text = 'ACTIVE'::text))
+          Rows Removed by Filter: 2143
+          Buffers: shared hit=27
+  ->  Hash Right Join  (cost=5441.99..5497.89 rows=355 width=338) (actual time=33.371..33.487 rows=357.00 loops=1)
+        Hash Cond: (b.pro_id = p.pro_id)
+        Buffers: shared hit=2571
+        ->  HashAggregate  (cost=5430.46..5452.50 rows=2204 width=20) (actual time=33.048..33.096 rows=357.00 loops=1)
+              Group Key: b.pro_id
+              Batches: 1  Memory Usage: 121kB
+              Buffers: shared hit=2544
+              ->  Hash Join  (cost=11.54..4850.16 rows=23212 width=31) (actual time=0.063..22.506 rows=22891.00 loops=1)
+                    Hash Cond: (b.pro_id = p_1.pro_id)
+                    Buffers: shared hit=2544
+                    ->  Seq Scan on bookings b  (cost=0.00..4044.00 rows=150000 width=31) (actual time=0.005..9.310 rows=150000.00 loops=1)
+                          Buffers: shared hit=2544
+                    ->  Hash  (cost=7.10..7.10 rows=355 width=4) (actual time=0.050..0.050 rows=357.00 loops=1)
+                          Buckets: 1024  Batches: 1  Memory Usage: 21kB
+                          ->  CTE Scan on active_bengaluru_pros p_1  (cost=0.00..7.10 rows=355 width=4) (actual time=0.001..0.024 rows=357.00 loops=1)
+                                Storage: Memory  Maximum Storage: 31kB
+        ->  Hash  (cost=7.10..7.10 rows=355 width=322) (actual time=0.317..0.317 rows=357.00 loops=1)
+              Buckets: 1024  Batches: 1  Memory Usage: 25kB
+              Buffers: shared hit=27
+              ->  CTE Scan on active_bengaluru_pros p  (cost=0.00..7.10 rows=355 width=322) (actual time=0.012..0.293 rows=357.00 loops=1)
+                    Storage: Memory  Maximum Storage: 31kB
+                    Buffers: shared hit=27
+Planning:
+  Buffers: shared hit=154
+Planning Time: 0.631 ms
+Execution Time: 33.670 ms
