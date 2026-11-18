@@ -1,0 +1,111 @@
+=== R25 run 1 ===
+Limit  (cost=11879244.31..11879244.39 rows=30 width=68) (actual time=4088.894..4088.899 rows=30.00 loops=1)
+  Buffers: shared hit=908695
+  ->  Sort  (cost=11879244.31..11879249.63 rows=2128 width=68) (actual time=4088.892..4088.895 rows=30.00 loops=1)
+        Sort Key: (COALESCE((SubPlan 1), '0'::numeric)) DESC
+        Sort Method: top-N heapsort  Memory: 26kB
+        Buffers: shared hit=908695
+        ->  GroupAggregate  (cost=0.28..11879181.47 rows=2128 width=68) (actual time=19.149..4088.433 rows=357.00 loops=1)
+              Group Key: a.pro_id
+              Buffers: shared hit=908692
+              ->  Nested Loop  (cost=0.28..81448.39 rows=2128 width=20) (actual time=0.026..426.280 rows=2142.00 loops=1)
+                    Join Filter: (a.pro_id = p.pro_id)
+                    Rows Removed by Join Filter: 5325858
+                    Buffers: shared hit=484
+                    ->  Index Scan using professionals_pkey on professionals p  (cost=0.28..110.03 rows=400 width=4) (actual time=0.008..1.178 rows=400.00 loops=1)
+                          Filter: (city_id = 1)
+                          Rows Removed by Filter: 2100
+                          Index Searches: 1
+                          Buffers: shared hit=35
+                    ->  Materialize  (cost=0.00..1571.61 rows=13300 width=20) (actual time=0.000..0.481 rows=13320.00 loops=400)
+                          Storage: Memory  Maximum Storage: 753kB
+                          Buffers: shared hit=449
+                          ->  Seq Scan on pro_availability a  (cost=0.00..1505.11 rows=13300 width=20) (actual time=0.008..3.918 rows=13320.00 loops=1)
+                                Filter: ((work_date >= '2026-06-22'::date) AND (work_date <= '2026-06-28'::date))
+                                Rows Removed by Filter: 57087
+                                Buffers: shared hit=449
+              SubPlan 1
+                ->  Aggregate  (cost=5544.01..5544.02 rows=1 width=32) (actual time=10.253..10.253 rows=1.00 loops=357)
+                      Buffers: shared hit=908208
+                      ->  Seq Scan on bookings b  (cost=0.00..5544.00 rows=1 width=16) (actual time=10.161..10.246 rows=0.78 loops=357)
+                            Filter: ((scheduled_start >= '2026-06-22 00:00:00+05:30'::timestamp with time zone) AND (scheduled_start < '2026-06-29 00:00:00+05:30'::timestamp with time zone) AND (pro_id = a.pro_id) AND ((status)::text = 'COMPLETED'::text))
+                            Rows Removed by Filter: 149999
+                            Buffers: shared hit=908208
+Planning:
+  Buffers: shared hit=224
+Planning Time: 0.936 ms
+Execution Time: 4088.985 ms
+=== R25 run 2 ===
+Limit  (cost=11879244.31..11879244.39 rows=30 width=68) (actual time=4113.789..4113.794 rows=30.00 loops=1)
+  Buffers: shared hit=908695
+  ->  Sort  (cost=11879244.31..11879249.63 rows=2128 width=68) (actual time=4113.788..4113.790 rows=30.00 loops=1)
+        Sort Key: (COALESCE((SubPlan 1), '0'::numeric)) DESC
+        Sort Method: top-N heapsort  Memory: 26kB
+        Buffers: shared hit=908695
+        ->  GroupAggregate  (cost=0.28..11879181.47 rows=2128 width=68) (actual time=21.349..4113.269 rows=357.00 loops=1)
+              Group Key: a.pro_id
+              Buffers: shared hit=908692
+              ->  Nested Loop  (cost=0.28..81448.39 rows=2128 width=20) (actual time=0.044..429.920 rows=2142.00 loops=1)
+                    Join Filter: (a.pro_id = p.pro_id)
+                    Rows Removed by Join Filter: 5325858
+                    Buffers: shared hit=484
+                    ->  Index Scan using professionals_pkey on professionals p  (cost=0.28..110.03 rows=400 width=4) (actual time=0.020..1.328 rows=400.00 loops=1)
+                          Filter: (city_id = 1)
+                          Rows Removed by Filter: 2100
+                          Index Searches: 1
+                          Buffers: shared hit=35
+                    ->  Materialize  (cost=0.00..1571.61 rows=13300 width=20) (actual time=0.000..0.486 rows=13320.00 loops=400)
+                          Storage: Memory  Maximum Storage: 753kB
+                          Buffers: shared hit=449
+                          ->  Seq Scan on pro_availability a  (cost=0.00..1505.11 rows=13300 width=20) (actual time=0.011..4.092 rows=13320.00 loops=1)
+                                Filter: ((work_date >= '2026-06-22'::date) AND (work_date <= '2026-06-28'::date))
+                                Rows Removed by Filter: 57087
+                                Buffers: shared hit=449
+              SubPlan 1
+                ->  Aggregate  (cost=5544.01..5544.02 rows=1 width=32) (actual time=10.311..10.311 rows=1.00 loops=357)
+                      Buffers: shared hit=908208
+                      ->  Seq Scan on bookings b  (cost=0.00..5544.00 rows=1 width=16) (actual time=10.216..10.302 rows=0.78 loops=357)
+                            Filter: ((scheduled_start >= '2026-06-22 00:00:00+05:30'::timestamp with time zone) AND (scheduled_start < '2026-06-29 00:00:00+05:30'::timestamp with time zone) AND (pro_id = a.pro_id) AND ((status)::text = 'COMPLETED'::text))
+                            Rows Removed by Filter: 149999
+                            Buffers: shared hit=908208
+Planning:
+  Buffers: shared hit=224
+Planning Time: 1.169 ms
+Execution Time: 4113.889 ms
+=== R25 run 3 ===
+Limit  (cost=11879244.31..11879244.39 rows=30 width=68) (actual time=4154.292..4154.298 rows=30.00 loops=1)
+  Buffers: shared hit=908695
+  ->  Sort  (cost=11879244.31..11879249.63 rows=2128 width=68) (actual time=4154.292..4154.294 rows=30.00 loops=1)
+        Sort Key: (COALESCE((SubPlan 1), '0'::numeric)) DESC
+        Sort Method: top-N heapsort  Memory: 26kB
+        Buffers: shared hit=908695
+        ->  GroupAggregate  (cost=0.28..11879181.47 rows=2128 width=68) (actual time=21.265..4153.707 rows=357.00 loops=1)
+              Group Key: a.pro_id
+              Buffers: shared hit=908692
+              ->  Nested Loop  (cost=0.28..81448.39 rows=2128 width=20) (actual time=0.031..431.887 rows=2142.00 loops=1)
+                    Join Filter: (a.pro_id = p.pro_id)
+                    Rows Removed by Join Filter: 5325858
+                    Buffers: shared hit=484
+                    ->  Index Scan using professionals_pkey on professionals p  (cost=0.28..110.03 rows=400 width=4) (actual time=0.010..1.443 rows=400.00 loops=1)
+                          Filter: (city_id = 1)
+                          Rows Removed by Filter: 2100
+                          Index Searches: 1
+                          Buffers: shared hit=35
+                    ->  Materialize  (cost=0.00..1571.61 rows=13300 width=20) (actual time=0.000..0.487 rows=13320.00 loops=400)
+                          Storage: Memory  Maximum Storage: 753kB
+                          Buffers: shared hit=449
+                          ->  Seq Scan on pro_availability a  (cost=0.00..1505.11 rows=13300 width=20) (actual time=0.009..4.490 rows=13320.00 loops=1)
+                                Filter: ((work_date >= '2026-06-22'::date) AND (work_date <= '2026-06-28'::date))
+                                Rows Removed by Filter: 57087
+                                Buffers: shared hit=449
+              SubPlan 1
+                ->  Aggregate  (cost=5544.01..5544.02 rows=1 width=32) (actual time=10.418..10.418 rows=1.00 loops=357)
+                      Buffers: shared hit=908208
+                      ->  Seq Scan on bookings b  (cost=0.00..5544.00 rows=1 width=16) (actual time=10.322..10.407 rows=0.78 loops=357)
+                            Filter: ((scheduled_start >= '2026-06-22 00:00:00+05:30'::timestamp with time zone) AND (scheduled_start < '2026-06-29 00:00:00+05:30'::timestamp with time zone) AND (pro_id = a.pro_id) AND ((status)::text = 'COMPLETED'::text))
+                            Rows Removed by Filter: 149999
+                            Buffers: shared hit=908208
+Planning:
+  Buffers: shared hit=224
+Planning Time: 1.054 ms
+Execution Time: 4154.392 ms

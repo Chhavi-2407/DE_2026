@@ -1,0 +1,90 @@
+=== R16 run 1 ===
+Limit  (cost=5155.39..5155.42 rows=10 width=15) (actual time=8.677..9.794 rows=10.00 loops=1)
+  Buffers: shared hit=2585
+  ->  Sort  (cost=5155.39..5155.64 rows=100 width=15) (actual time=8.675..9.792 rows=10.00 loops=1)
+        Sort Key: (count(*)) DESC
+        Sort Method: quicksort  Memory: 25kB
+        Buffers: shared hit=2585
+        ->  Finalize GroupAggregate  (cost=5125.43..5153.23 rows=100 width=15) (actual time=8.578..9.780 rows=16.00 loops=1)
+              Group Key: pincode
+              Buffers: shared hit=2582
+              ->  Gather Merge  (cost=5125.43..5151.38 rows=170 width=15) (actual time=8.566..9.771 rows=32.00 loops=1)
+                    Workers Planned: 1
+                    Workers Launched: 1
+                    Buffers: shared hit=2582
+                    ->  Partial GroupAggregate  (cost=4125.42..4132.25 rows=100 width=15) (actual time=6.487..6.556 rows=16.00 loops=2)
+                          Group Key: pincode
+                          Buffers: shared hit=2582
+                          ->  Sort  (cost=4125.42..4127.36 rows=777 width=7) (actual time=6.478..6.504 rows=680.00 loops=2)
+                                Sort Key: pincode
+                                Sort Method: quicksort  Memory: 25kB
+                                Buffers: shared hit=2582
+                                Worker 0:  Sort Method: quicksort  Memory: 25kB
+                                ->  Parallel Seq Scan on bookings  (cost=0.00..4088.12 rows=777 width=7) (actual time=5.794..6.192 rows=680.00 loops=2)
+                                      Filter: ((booked_at >= '2026-06-01 00:00:00+05:30'::timestamp with time zone) AND (booked_at < '2026-07-01 00:00:00+05:30'::timestamp with time zone) AND (city_id = 2))
+                                      Rows Removed by Filter: 74320
+                                      Buffers: shared hit=2544
+Planning:
+  Buffers: shared hit=125
+Planning Time: 0.371 ms
+Execution Time: 9.851 ms
+=== R16 run 2 ===
+Limit  (cost=5155.39..5155.42 rows=10 width=15) (actual time=9.069..10.114 rows=10.00 loops=1)
+  Buffers: shared hit=2585
+  ->  Sort  (cost=5155.39..5155.64 rows=100 width=15) (actual time=9.068..10.112 rows=10.00 loops=1)
+        Sort Key: (count(*)) DESC
+        Sort Method: quicksort  Memory: 25kB
+        Buffers: shared hit=2585
+        ->  Finalize GroupAggregate  (cost=5125.43..5153.23 rows=100 width=15) (actual time=8.977..10.089 rows=16.00 loops=1)
+              Group Key: pincode
+              Buffers: shared hit=2582
+              ->  Gather Merge  (cost=5125.43..5151.38 rows=170 width=15) (actual time=8.965..10.072 rows=32.00 loops=1)
+                    Workers Planned: 1
+                    Workers Launched: 1
+                    Buffers: shared hit=2582
+                    ->  Partial GroupAggregate  (cost=4125.42..4132.25 rows=100 width=15) (actual time=6.971..7.028 rows=16.00 loops=2)
+                          Group Key: pincode
+                          Buffers: shared hit=2582
+                          ->  Sort  (cost=4125.42..4127.36 rows=777 width=7) (actual time=6.964..6.988 rows=680.00 loops=2)
+                                Sort Key: pincode
+                                Sort Method: quicksort  Memory: 25kB
+                                Buffers: shared hit=2582
+                                Worker 0:  Sort Method: quicksort  Memory: 25kB
+                                ->  Parallel Seq Scan on bookings  (cost=0.00..4088.12 rows=777 width=7) (actual time=6.305..6.703 rows=680.00 loops=2)
+                                      Filter: ((booked_at >= '2026-06-01 00:00:00+05:30'::timestamp with time zone) AND (booked_at < '2026-07-01 00:00:00+05:30'::timestamp with time zone) AND (city_id = 2))
+                                      Rows Removed by Filter: 74320
+                                      Buffers: shared hit=2544
+Planning:
+  Buffers: shared hit=125
+Planning Time: 0.417 ms
+Execution Time: 10.177 ms
+=== R16 run 3 ===
+Limit  (cost=5155.39..5155.42 rows=10 width=15) (actual time=9.752..11.002 rows=10.00 loops=1)
+  Buffers: shared hit=2585
+  ->  Sort  (cost=5155.39..5155.64 rows=100 width=15) (actual time=9.751..11.000 rows=10.00 loops=1)
+        Sort Key: (count(*)) DESC
+        Sort Method: quicksort  Memory: 25kB
+        Buffers: shared hit=2585
+        ->  Finalize GroupAggregate  (cost=5125.43..5153.23 rows=100 width=15) (actual time=9.645..10.985 rows=16.00 loops=1)
+              Group Key: pincode
+              Buffers: shared hit=2582
+              ->  Gather Merge  (cost=5125.43..5151.38 rows=170 width=15) (actual time=9.633..10.974 rows=32.00 loops=1)
+                    Workers Planned: 1
+                    Workers Launched: 1
+                    Buffers: shared hit=2582
+                    ->  Partial GroupAggregate  (cost=4125.42..4132.25 rows=100 width=15) (actual time=7.426..7.484 rows=16.00 loops=2)
+                          Group Key: pincode
+                          Buffers: shared hit=2582
+                          ->  Sort  (cost=4125.42..4127.36 rows=777 width=7) (actual time=7.415..7.438 rows=680.00 loops=2)
+                                Sort Key: pincode
+                                Sort Method: quicksort  Memory: 25kB
+                                Buffers: shared hit=2582
+                                Worker 0:  Sort Method: quicksort  Memory: 25kB
+                                ->  Parallel Seq Scan on bookings  (cost=0.00..4088.12 rows=777 width=7) (actual time=6.650..7.129 rows=680.00 loops=2)
+                                      Filter: ((booked_at >= '2026-06-01 00:00:00+05:30'::timestamp with time zone) AND (booked_at < '2026-07-01 00:00:00+05:30'::timestamp with time zone) AND (city_id = 2))
+                                      Rows Removed by Filter: 74320
+                                      Buffers: shared hit=2544
+Planning:
+  Buffers: shared hit=125
+Planning Time: 0.434 ms
+Execution Time: 11.069 ms

@@ -1,0 +1,63 @@
+=== W04 run 1 ===
+Insert on payouts  (cost=5184.98..5209.66 rows=0 width=0) (actual time=13.726..13.727 rows=0.00 loops=1)
+  Buffers: shared hit=3795 dirtied=5 written=1
+  ->  Subquery Scan on "*SELECT*"  (cost=5184.98..5209.66 rows=344 width=130) (actual time=12.137..12.616 rows=401.00 loops=1)
+        Buffers: shared hit=2547
+        ->  GroupAggregate  (cost=5184.98..5202.78 rows=344 width=148) (actual time=12.133..12.556 rows=401.00 loops=1)
+              Group Key: bookings.pro_id
+              Buffers: shared hit=2547
+              ->  Sort  (cost=5184.98..5185.92 rows=374 width=17) (actual time=12.120..12.137 rows=462.00 loops=1)
+                    Sort Key: bookings.pro_id
+                    Sort Method: quicksort  Memory: 40kB
+                    Buffers: shared hit=2547
+                    ->  Seq Scan on bookings  (cost=0.00..5169.00 rows=374 width=17) (actual time=11.822..12.019 rows=462.00 loops=1)
+                          Filter: ((completed_at >= '2026-06-29 00:00:00+05:30'::timestamp with time zone) AND (completed_at < '2026-07-06 00:00:00+05:30'::timestamp with time zone) AND ((status)::text = 'COMPLETED'::text))
+                          Rows Removed by Filter: 149538
+                          Buffers: shared hit=2544
+Planning:
+  Buffers: shared hit=124
+Planning Time: 0.371 ms
+Trigger for constraint fk_payouts_professional: time=1.781 calls=401
+Execution Time: 15.577 ms
+=== W04 run 2 ===
+Insert on payouts  (cost=5184.98..5209.66 rows=0 width=0) (actual time=14.021..14.021 rows=0.00 loops=1)
+  Buffers: shared hit=4105 dirtied=4 written=2
+  ->  Subquery Scan on "*SELECT*"  (cost=5184.98..5209.66 rows=344 width=130) (actual time=12.445..12.927 rows=401.00 loops=1)
+        Buffers: shared hit=2547
+        ->  GroupAggregate  (cost=5184.98..5202.78 rows=344 width=148) (actual time=12.441..12.863 rows=401.00 loops=1)
+              Group Key: bookings.pro_id
+              Buffers: shared hit=2547
+              ->  Sort  (cost=5184.98..5185.92 rows=374 width=17) (actual time=12.429..12.448 rows=462.00 loops=1)
+                    Sort Key: bookings.pro_id
+                    Sort Method: quicksort  Memory: 40kB
+                    Buffers: shared hit=2547
+                    ->  Seq Scan on bookings  (cost=0.00..5169.00 rows=374 width=17) (actual time=12.144..12.339 rows=462.00 loops=1)
+                          Filter: ((completed_at >= '2026-06-29 00:00:00+05:30'::timestamp with time zone) AND (completed_at < '2026-07-06 00:00:00+05:30'::timestamp with time zone) AND ((status)::text = 'COMPLETED'::text))
+                          Rows Removed by Filter: 149538
+                          Buffers: shared hit=2544
+Planning:
+  Buffers: shared hit=124
+Planning Time: 0.354 ms
+Trigger for constraint fk_payouts_professional: time=1.799 calls=401
+Execution Time: 15.887 ms
+=== W04 run 3 ===
+Insert on payouts  (cost=5184.98..5209.66 rows=0 width=0) (actual time=14.346..14.347 rows=0.00 loops=1)
+  Buffers: shared hit=4040 dirtied=4 written=4
+  ->  Subquery Scan on "*SELECT*"  (cost=5184.98..5209.66 rows=344 width=130) (actual time=12.739..13.222 rows=401.00 loops=1)
+        Buffers: shared hit=2547
+        ->  GroupAggregate  (cost=5184.98..5202.78 rows=344 width=148) (actual time=12.734..13.158 rows=401.00 loops=1)
+              Group Key: bookings.pro_id
+              Buffers: shared hit=2547
+              ->  Sort  (cost=5184.98..5185.92 rows=374 width=17) (actual time=12.720..12.739 rows=462.00 loops=1)
+                    Sort Key: bookings.pro_id
+                    Sort Method: quicksort  Memory: 40kB
+                    Buffers: shared hit=2547
+                    ->  Seq Scan on bookings  (cost=0.00..5169.00 rows=374 width=17) (actual time=12.413..12.624 rows=462.00 loops=1)
+                          Filter: ((completed_at >= '2026-06-29 00:00:00+05:30'::timestamp with time zone) AND (completed_at < '2026-07-06 00:00:00+05:30'::timestamp with time zone) AND ((status)::text = 'COMPLETED'::text))
+                          Rows Removed by Filter: 149538
+                          Buffers: shared hit=2544
+Planning:
+  Buffers: shared hit=124
+Planning Time: 0.381 ms
+Trigger for constraint fk_payouts_professional: time=1.853 calls=401
+Execution Time: 16.269 ms

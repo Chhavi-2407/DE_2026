@@ -1,0 +1,81 @@
+=== R19 run 1 ===
+Sort  (cost=3537011.99..3537012.87 rows=355 width=32) (actual time=6274.346..6274.378 rows=357.00 loops=1)
+  Sort Key: ((SubPlan 1)) DESC
+  Sort Method: quicksort  Memory: 42kB
+  Buffers: shared hit=1816446
+  ->  Seq Scan on professionals p  (cost=0.00..3536996.95 rows=355 width=32) (actual time=19.928..6274.067 rows=357.00 loops=1)
+        Filter: ((city_id = 1) AND ((status)::text = 'ACTIVE'::text))
+        Rows Removed by Filter: 2143
+        Buffers: shared hit=1816443
+        SubPlan 1
+          ->  Aggregate  (cost=5544.01..5544.02 rows=1 width=8) (actual time=10.171..10.171 rows=1.00 loops=357)
+                Buffers: shared hit=908208
+                ->  Seq Scan on bookings b  (cost=0.00..5544.00 rows=3 width=0) (actual time=9.714..10.168 rows=3.41 loops=357)
+                      Filter: ((scheduled_start >= '2026-06-01 00:00:00+05:30'::timestamp with time zone) AND (scheduled_start < '2026-07-01 00:00:00+05:30'::timestamp with time zone) AND (pro_id = p.pro_id) AND ((status)::text = 'COMPLETED'::text))
+                      Rows Removed by Filter: 149997
+                      Buffers: shared hit=908208
+        SubPlan 2
+          ->  Aggregate  (cost=4419.16..4419.17 rows=1 width=8) (actual time=7.400..7.400 rows=1.00 loops=357)
+                Buffers: shared hit=908208
+                ->  Seq Scan on bookings b_1  (cost=0.00..4419.00 rows=65 width=8) (actual time=0.166..7.391 rows=64.12 loops=357)
+                      Filter: (pro_id = p.pro_id)
+                      Rows Removed by Filter: 149936
+                      Buffers: shared hit=908208
+Planning:
+  Buffers: shared hit=148
+Planning Time: 0.653 ms
+Execution Time: 6274.466 ms
+=== R19 run 2 ===
+Sort  (cost=3537011.99..3537012.87 rows=355 width=32) (actual time=6375.390..6375.414 rows=357.00 loops=1)
+  Sort Key: ((SubPlan 1)) DESC
+  Sort Method: quicksort  Memory: 42kB
+  Buffers: shared hit=1816446
+  ->  Seq Scan on professionals p  (cost=0.00..3536996.95 rows=355 width=32) (actual time=21.450..6375.082 rows=357.00 loops=1)
+        Filter: ((city_id = 1) AND ((status)::text = 'ACTIVE'::text))
+        Rows Removed by Filter: 2143
+        Buffers: shared hit=1816443
+        SubPlan 1
+          ->  Aggregate  (cost=5544.01..5544.02 rows=1 width=8) (actual time=10.323..10.323 rows=1.00 loops=357)
+                Buffers: shared hit=908208
+                ->  Seq Scan on bookings b  (cost=0.00..5544.00 rows=3 width=0) (actual time=9.863..10.320 rows=3.41 loops=357)
+                      Filter: ((scheduled_start >= '2026-06-01 00:00:00+05:30'::timestamp with time zone) AND (scheduled_start < '2026-07-01 00:00:00+05:30'::timestamp with time zone) AND (pro_id = p.pro_id) AND ((status)::text = 'COMPLETED'::text))
+                      Rows Removed by Filter: 149997
+                      Buffers: shared hit=908208
+        SubPlan 2
+          ->  Aggregate  (cost=4419.16..4419.17 rows=1 width=8) (actual time=7.531..7.531 rows=1.00 loops=357)
+                Buffers: shared hit=908208
+                ->  Seq Scan on bookings b_1  (cost=0.00..4419.00 rows=65 width=8) (actual time=0.168..7.519 rows=64.12 loops=357)
+                      Filter: (pro_id = p.pro_id)
+                      Rows Removed by Filter: 149936
+                      Buffers: shared hit=908208
+Planning:
+  Buffers: shared hit=148
+Planning Time: 0.625 ms
+Execution Time: 6375.507 ms
+=== R19 run 3 ===
+Sort  (cost=3537011.99..3537012.87 rows=355 width=32) (actual time=6464.505..6464.531 rows=357.00 loops=1)
+  Sort Key: ((SubPlan 1)) DESC
+  Sort Method: quicksort  Memory: 42kB
+  Buffers: shared hit=1816446
+  ->  Seq Scan on professionals p  (cost=0.00..3536996.95 rows=355 width=32) (actual time=22.107..6464.000 rows=357.00 loops=1)
+        Filter: ((city_id = 1) AND ((status)::text = 'ACTIVE'::text))
+        Rows Removed by Filter: 2143
+        Buffers: shared hit=1816443
+        SubPlan 1
+          ->  Aggregate  (cost=5544.01..5544.02 rows=1 width=8) (actual time=10.448..10.448 rows=1.00 loops=357)
+                Buffers: shared hit=908208
+                ->  Seq Scan on bookings b  (cost=0.00..5544.00 rows=3 width=0) (actual time=9.978..10.442 rows=3.41 loops=357)
+                      Filter: ((scheduled_start >= '2026-06-01 00:00:00+05:30'::timestamp with time zone) AND (scheduled_start < '2026-07-01 00:00:00+05:30'::timestamp with time zone) AND (pro_id = p.pro_id) AND ((status)::text = 'COMPLETED'::text))
+                      Rows Removed by Filter: 149997
+                      Buffers: shared hit=908208
+        SubPlan 2
+          ->  Aggregate  (cost=4419.16..4419.17 rows=1 width=8) (actual time=7.653..7.653 rows=1.00 loops=357)
+                Buffers: shared hit=908208
+                ->  Seq Scan on bookings b_1  (cost=0.00..4419.00 rows=65 width=8) (actual time=0.172..7.640 rows=64.12 loops=357)
+                      Filter: (pro_id = p.pro_id)
+                      Rows Removed by Filter: 149936
+                      Buffers: shared hit=908208
+Planning:
+  Buffers: shared hit=148
+Planning Time: 0.645 ms
+Execution Time: 6464.634 ms

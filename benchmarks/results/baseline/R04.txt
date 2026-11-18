@@ -1,0 +1,69 @@
+=== R04 run 1 ===
+Sort  (cost=5090.58..5090.58 rows=1 width=54) (actual time=8.411..9.814 rows=1.00 loops=1)
+  Sort Key: b.scheduled_start
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: shared hit=2548
+  ->  Nested Loop  (cost=1000.00..5090.57 rows=1 width=54) (actual time=8.277..9.799 rows=1.00 loops=1)
+        Join Filter: (s.service_id = b.service_id)
+        Rows Removed by Join Filter: 21
+        Buffers: shared hit=2545
+        ->  Gather  (cost=1000.00..5088.22 rows=1 width=42) (actual time=8.265..9.785 rows=1.00 loops=1)
+              Workers Planned: 1
+              Workers Launched: 1
+              Buffers: shared hit=2544
+              ->  Parallel Seq Scan on bookings b  (cost=0.00..4088.12 rows=1 width=42) (actual time=6.476..6.489 rows=0.50 loops=2)
+                    Filter: ((pro_id = 425) AND (date(scheduled_start) = '2026-07-02'::date))
+                    Rows Removed by Filter: 75000
+                    Buffers: shared hit=2544
+        ->  Seq Scan on services s  (cost=0.00..1.60 rows=60 width=20) (actual time=0.007..0.008 rows=22.00 loops=1)
+              Buffers: shared hit=1
+Planning:
+  Buffers: shared hit=266
+Planning Time: 0.635 ms
+Execution Time: 9.860 ms
+=== R04 run 2 ===
+Sort  (cost=5090.58..5090.58 rows=1 width=54) (actual time=8.245..9.428 rows=1.00 loops=1)
+  Sort Key: b.scheduled_start
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: shared hit=2548
+  ->  Nested Loop  (cost=1000.00..5090.57 rows=1 width=54) (actual time=8.174..9.413 rows=1.00 loops=1)
+        Join Filter: (s.service_id = b.service_id)
+        Rows Removed by Join Filter: 21
+        Buffers: shared hit=2545
+        ->  Gather  (cost=1000.00..5088.22 rows=1 width=42) (actual time=8.162..9.401 rows=1.00 loops=1)
+              Workers Planned: 1
+              Workers Launched: 1
+              Buffers: shared hit=2544
+              ->  Parallel Seq Scan on bookings b  (cost=0.00..4088.12 rows=1 width=42) (actual time=6.395..6.410 rows=0.50 loops=2)
+                    Filter: ((pro_id = 425) AND (date(scheduled_start) = '2026-07-02'::date))
+                    Rows Removed by Filter: 75000
+                    Buffers: shared hit=2544
+        ->  Seq Scan on services s  (cost=0.00..1.60 rows=60 width=20) (actual time=0.007..0.008 rows=22.00 loops=1)
+              Buffers: shared hit=1
+Planning:
+  Buffers: shared hit=264
+Planning Time: 0.614 ms
+Execution Time: 9.470 ms
+=== R04 run 3 ===
+Sort  (cost=5090.58..5090.58 rows=1 width=54) (actual time=8.279..9.531 rows=1.00 loops=1)
+  Sort Key: b.scheduled_start
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: shared hit=2548
+  ->  Nested Loop  (cost=1000.00..5090.57 rows=1 width=54) (actual time=8.211..9.514 rows=1.00 loops=1)
+        Join Filter: (s.service_id = b.service_id)
+        Rows Removed by Join Filter: 21
+        Buffers: shared hit=2545
+        ->  Gather  (cost=1000.00..5088.22 rows=1 width=42) (actual time=8.193..9.496 rows=1.00 loops=1)
+              Workers Planned: 1
+              Workers Launched: 1
+              Buffers: shared hit=2544
+              ->  Parallel Seq Scan on bookings b  (cost=0.00..4088.12 rows=1 width=42) (actual time=6.423..6.439 rows=0.50 loops=2)
+                    Filter: ((pro_id = 425) AND (date(scheduled_start) = '2026-07-02'::date))
+                    Rows Removed by Filter: 75000
+                    Buffers: shared hit=2544
+        ->  Seq Scan on services s  (cost=0.00..1.60 rows=60 width=20) (actual time=0.011..0.012 rows=22.00 loops=1)
+              Buffers: shared hit=1
+Planning:
+  Buffers: shared hit=264
+Planning Time: 0.613 ms
+Execution Time: 9.577 ms

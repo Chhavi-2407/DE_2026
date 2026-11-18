@@ -1,0 +1,69 @@
+=== R01 run 1 ===
+Sort  (cost=3.03..3.05 rows=6 width=29) (actual time=0.047..0.048 rows=5.00 loops=1)
+  Sort Key: s.base_price
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: shared hit=5
+  ->  Hash Join  (cost=1.14..2.95 rows=6 width=29) (actual time=0.022..0.027 rows=5.00 loops=1)
+        Hash Cond: (s.category_id = c.category_id)
+        Buffers: shared hit=2
+        ->  Seq Scan on services s  (cost=0.00..1.60 rows=57 width=33) (actual time=0.006..0.010 rows=57.00 loops=1)
+              Filter: is_active
+              Rows Removed by Filter: 3
+              Buffers: shared hit=1
+        ->  Hash  (cost=1.12..1.12 rows=1 width=4) (actual time=0.008..0.008 rows=1.00 loops=1)
+              Buckets: 1024  Batches: 1  Memory Usage: 9kB
+              Buffers: shared hit=1
+              ->  Seq Scan on service_categories c  (cost=0.00..1.12 rows=1 width=4) (actual time=0.003..0.004 rows=1.00 loops=1)
+                    Filter: ((category_name)::text = 'AC Repair'::text)
+                    Rows Removed by Filter: 9
+                    Buffers: shared hit=1
+Planning:
+  Buffers: shared hit=252
+Planning Time: 0.714 ms
+Execution Time: 0.085 ms
+=== R01 run 2 ===
+Sort  (cost=3.03..3.05 rows=6 width=29) (actual time=0.047..0.047 rows=5.00 loops=1)
+  Sort Key: s.base_price
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: shared hit=5
+  ->  Hash Join  (cost=1.14..2.95 rows=6 width=29) (actual time=0.023..0.028 rows=5.00 loops=1)
+        Hash Cond: (s.category_id = c.category_id)
+        Buffers: shared hit=2
+        ->  Seq Scan on services s  (cost=0.00..1.60 rows=57 width=33) (actual time=0.006..0.010 rows=57.00 loops=1)
+              Filter: is_active
+              Rows Removed by Filter: 3
+              Buffers: shared hit=1
+        ->  Hash  (cost=1.12..1.12 rows=1 width=4) (actual time=0.009..0.009 rows=1.00 loops=1)
+              Buckets: 1024  Batches: 1  Memory Usage: 9kB
+              Buffers: shared hit=1
+              ->  Seq Scan on service_categories c  (cost=0.00..1.12 rows=1 width=4) (actual time=0.003..0.004 rows=1.00 loops=1)
+                    Filter: ((category_name)::text = 'AC Repair'::text)
+                    Rows Removed by Filter: 9
+                    Buffers: shared hit=1
+Planning:
+  Buffers: shared hit=255
+Planning Time: 0.629 ms
+Execution Time: 0.097 ms
+=== R01 run 3 ===
+Sort  (cost=3.03..3.05 rows=6 width=29) (actual time=0.046..0.047 rows=5.00 loops=1)
+  Sort Key: s.base_price
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: shared hit=5
+  ->  Hash Join  (cost=1.14..2.95 rows=6 width=29) (actual time=0.023..0.028 rows=5.00 loops=1)
+        Hash Cond: (s.category_id = c.category_id)
+        Buffers: shared hit=2
+        ->  Seq Scan on services s  (cost=0.00..1.60 rows=57 width=33) (actual time=0.006..0.010 rows=57.00 loops=1)
+              Filter: is_active
+              Rows Removed by Filter: 3
+              Buffers: shared hit=1
+        ->  Hash  (cost=1.12..1.12 rows=1 width=4) (actual time=0.009..0.009 rows=1.00 loops=1)
+              Buckets: 1024  Batches: 1  Memory Usage: 9kB
+              Buffers: shared hit=1
+              ->  Seq Scan on service_categories c  (cost=0.00..1.12 rows=1 width=4) (actual time=0.003..0.004 rows=1.00 loops=1)
+                    Filter: ((category_name)::text = 'AC Repair'::text)
+                    Rows Removed by Filter: 9
+                    Buffers: shared hit=1
+Planning:
+  Buffers: shared hit=255
+Planning Time: 0.630 ms
+Execution Time: 0.085 ms
