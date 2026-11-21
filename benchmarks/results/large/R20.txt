@@ -1,0 +1,66 @@
+=== R20 run 1 ===
+WindowAgg  (cost=9768.58..9998.09 rows=13116 width=68) (actual time=50.667..50.685 rows=30.00 loops=1)
+  Window: w1 AS (ORDER BY ((bookings.scheduled_start)::date))
+  Storage: Memory  Maximum Storage: 17kB
+  Buffers: shared hit=1618 read=1159
+  ->  Sort  (cost=9768.56..9801.35 rows=13116 width=36) (actual time=50.646..50.648 rows=30.00 loops=1)
+        Sort Key: ((bookings.scheduled_start)::date)
+        Sort Method: quicksort  Memory: 25kB
+        Buffers: shared hit=1618 read=1159
+        ->  HashAggregate  (cost=8674.75..8871.49 rows=13116 width=36) (actual time=50.558..50.628 rows=30.00 loops=1)
+              Group Key: (bookings.scheduled_start)::date
+              Batches: 1  Memory Usage: 297kB
+              Buffers: shared hit=1615 read=1159
+              ->  Index Only Scan using idx_bookings_completed_scheduled_start on bookings  (cost=0.44..7645.72 rows=137204 width=12) (actual time=0.068..28.198 rows=140959.00 loops=1)
+                    Index Cond: ((scheduled_start >= ('2026-06-01 00:00:00'::timestamp without time zone AT TIME ZONE current_setting('TimeZone'::text))) AND (scheduled_start < ('2026-07-01 00:00:00'::timestamp without time zone AT TIME ZONE current_setting('TimeZone'::text))))
+                    Heap Fetches: 2160
+                    Index Searches: 1
+                    Buffers: shared hit=1615 read=1159
+Planning:
+  Buffers: shared hit=507
+Planning Time: 1.340 ms
+Execution Time: 50.775 ms
+=== R20 run 2 ===
+WindowAgg  (cost=9768.58..9998.09 rows=13116 width=68) (actual time=48.028..48.045 rows=30.00 loops=1)
+  Window: w1 AS (ORDER BY ((bookings.scheduled_start)::date))
+  Storage: Memory  Maximum Storage: 17kB
+  Buffers: shared hit=2777
+  ->  Sort  (cost=9768.56..9801.35 rows=13116 width=36) (actual time=48.010..48.012 rows=30.00 loops=1)
+        Sort Key: ((bookings.scheduled_start)::date)
+        Sort Method: quicksort  Memory: 25kB
+        Buffers: shared hit=2777
+        ->  HashAggregate  (cost=8674.75..8871.49 rows=13116 width=36) (actual time=47.924..47.993 rows=30.00 loops=1)
+              Group Key: (bookings.scheduled_start)::date
+              Batches: 1  Memory Usage: 297kB
+              Buffers: shared hit=2774
+              ->  Index Only Scan using idx_bookings_completed_scheduled_start on bookings  (cost=0.44..7645.72 rows=137204 width=12) (actual time=0.067..25.519 rows=140959.00 loops=1)
+                    Index Cond: ((scheduled_start >= ('2026-06-01 00:00:00'::timestamp without time zone AT TIME ZONE current_setting('TimeZone'::text))) AND (scheduled_start < ('2026-07-01 00:00:00'::timestamp without time zone AT TIME ZONE current_setting('TimeZone'::text))))
+                    Heap Fetches: 2160
+                    Index Searches: 1
+                    Buffers: shared hit=2774
+Planning:
+  Buffers: shared hit=507
+Planning Time: 1.511 ms
+Execution Time: 48.145 ms
+=== R20 run 3 ===
+WindowAgg  (cost=9768.58..9998.09 rows=13116 width=68) (actual time=47.796..47.812 rows=30.00 loops=1)
+  Window: w1 AS (ORDER BY ((bookings.scheduled_start)::date))
+  Storage: Memory  Maximum Storage: 17kB
+  Buffers: shared hit=2777
+  ->  Sort  (cost=9768.56..9801.35 rows=13116 width=36) (actual time=47.775..47.777 rows=30.00 loops=1)
+        Sort Key: ((bookings.scheduled_start)::date)
+        Sort Method: quicksort  Memory: 25kB
+        Buffers: shared hit=2777
+        ->  HashAggregate  (cost=8674.75..8871.49 rows=13116 width=36) (actual time=47.687..47.757 rows=30.00 loops=1)
+              Group Key: (bookings.scheduled_start)::date
+              Batches: 1  Memory Usage: 297kB
+              Buffers: shared hit=2774
+              ->  Index Only Scan using idx_bookings_completed_scheduled_start on bookings  (cost=0.44..7645.72 rows=137204 width=12) (actual time=0.071..25.477 rows=140959.00 loops=1)
+                    Index Cond: ((scheduled_start >= ('2026-06-01 00:00:00'::timestamp without time zone AT TIME ZONE current_setting('TimeZone'::text))) AND (scheduled_start < ('2026-07-01 00:00:00'::timestamp without time zone AT TIME ZONE current_setting('TimeZone'::text))))
+                    Heap Fetches: 2160
+                    Index Searches: 1
+                    Buffers: shared hit=2774
+Planning:
+  Buffers: shared hit=507
+Planning Time: 1.516 ms
+Execution Time: 47.936 ms

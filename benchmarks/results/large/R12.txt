@@ -1,0 +1,51 @@
+=== R12 run 1 ===
+GroupAggregate  (cost=19231.35..22644.88 rows=136541 width=48) (actual time=29.664..39.923 rows=6.00 loops=1)
+  Group Key: (date_trunc('month'::text, booked_at))
+  Buffers: shared hit=190 read=394, temp read=272 written=273
+  ->  Sort  (cost=19231.35..19572.71 rows=136541 width=11) (actual time=26.991..32.208 rows=88893.00 loops=1)
+        Sort Key: (date_trunc('month'::text, booked_at))
+        Sort Method: external merge  Disk: 2176kB
+        Buffers: shared hit=190 read=394, temp read=272 written=273
+        ->  Index Only Scan using idx_bookings_discounted_booked_at on bookings b  (cost=0.43..5250.61 rows=136541 width=11) (actual time=0.029..16.467 rows=88893.00 loops=1)
+              Index Cond: ((booked_at >= ('2026-01-01 00:00:00'::timestamp without time zone AT TIME ZONE current_setting('TimeZone'::text))) AND (booked_at < ('2027-01-01 00:00:00'::timestamp without time zone AT TIME ZONE current_setting('TimeZone'::text))))
+              Heap Fetches: 1298
+              Index Searches: 1
+              Buffers: shared hit=187 read=394
+Planning:
+  Buffers: shared hit=466 read=3
+Planning Time: 1.418 ms
+Execution Time: 40.822 ms
+=== R12 run 2 ===
+GroupAggregate  (cost=19231.35..22644.88 rows=136541 width=48) (actual time=28.665..39.001 rows=6.00 loops=1)
+  Group Key: (date_trunc('month'::text, booked_at))
+  Buffers: shared hit=584, temp read=272 written=273
+  ->  Sort  (cost=19231.35..19572.71 rows=136541 width=11) (actual time=25.903..31.122 rows=88893.00 loops=1)
+        Sort Key: (date_trunc('month'::text, booked_at))
+        Sort Method: external merge  Disk: 2176kB
+        Buffers: shared hit=584, temp read=272 written=273
+        ->  Index Only Scan using idx_bookings_discounted_booked_at on bookings b  (cost=0.43..5250.61 rows=136541 width=11) (actual time=0.017..15.780 rows=88893.00 loops=1)
+              Index Cond: ((booked_at >= ('2026-01-01 00:00:00'::timestamp without time zone AT TIME ZONE current_setting('TimeZone'::text))) AND (booked_at < ('2027-01-01 00:00:00'::timestamp without time zone AT TIME ZONE current_setting('TimeZone'::text))))
+              Heap Fetches: 1298
+              Index Searches: 1
+              Buffers: shared hit=581
+Planning:
+  Buffers: shared hit=469
+Planning Time: 1.383 ms
+Execution Time: 40.239 ms
+=== R12 run 3 ===
+GroupAggregate  (cost=19231.35..22644.88 rows=136541 width=48) (actual time=29.852..40.262 rows=6.00 loops=1)
+  Group Key: (date_trunc('month'::text, booked_at))
+  Buffers: shared hit=584, temp read=272 written=273
+  ->  Sort  (cost=19231.35..19572.71 rows=136541 width=11) (actual time=26.968..32.290 rows=88893.00 loops=1)
+        Sort Key: (date_trunc('month'::text, booked_at))
+        Sort Method: external merge  Disk: 2176kB
+        Buffers: shared hit=584, temp read=272 written=273
+        ->  Index Only Scan using idx_bookings_discounted_booked_at on bookings b  (cost=0.43..5250.61 rows=136541 width=11) (actual time=0.021..16.267 rows=88893.00 loops=1)
+              Index Cond: ((booked_at >= ('2026-01-01 00:00:00'::timestamp without time zone AT TIME ZONE current_setting('TimeZone'::text))) AND (booked_at < ('2027-01-01 00:00:00'::timestamp without time zone AT TIME ZONE current_setting('TimeZone'::text))))
+              Heap Fetches: 1298
+              Index Searches: 1
+              Buffers: shared hit=581
+Planning:
+  Buffers: shared hit=469
+Planning Time: 1.582 ms
+Execution Time: 41.087 ms

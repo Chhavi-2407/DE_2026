@@ -1,0 +1,36 @@
+=== W05 run 1 ===
+Update on bookings  (cost=0.28..50.00 rows=0 width=0) (actual time=1653.013..1653.014 rows=0.00 loops=1)
+  Buffers: shared hit=83198 read=10857 dirtied=11944 written=929
+  ->  Index Scan using idx_bookings_assigned_unstarted_end on bookings  (cost=0.28..50.00 rows=1019 width=84) (actual time=0.062..4.967 rows=3296.00 loops=1)
+        Index Cond: (scheduled_end < '2026-07-02 00:00:00+05:30'::timestamp with time zone)
+        Filter: ((started_at IS NULL) AND ((status)::text = 'ASSIGNED'::text))
+        Index Searches: 1
+        Buffers: shared hit=2912 read=58 written=3
+Planning:
+  Buffers: shared hit=412
+Planning Time: 1.360 ms
+Execution Time: 1653.119 ms
+=== W05 run 2 ===
+Update on bookings  (cost=0.28..50.00 rows=0 width=0) (actual time=507.954..507.955 rows=0.00 loops=1)
+  Buffers: shared hit=88986 read=5043 dirtied=5574 written=3772
+  ->  Index Scan using idx_bookings_assigned_unstarted_end on bookings  (cost=0.28..50.00 rows=1019 width=84) (actual time=0.086..5.509 rows=3296.00 loops=1)
+        Index Cond: (scheduled_end < '2026-07-02 00:00:00+05:30'::timestamp with time zone)
+        Filter: ((started_at IS NULL) AND ((status)::text = 'ASSIGNED'::text))
+        Index Searches: 1
+        Buffers: shared hit=2956 read=10 dirtied=12 written=10
+Planning:
+  Buffers: shared hit=412
+Planning Time: 1.551 ms
+Execution Time: 508.084 ms
+=== W05 run 3 ===
+Update on bookings  (cost=0.28..50.03 rows=0 width=0) (actual time=108.120..108.121 rows=0.00 loops=1)
+  Buffers: shared hit=95209 read=83 dirtied=146 written=67
+  ->  Index Scan using idx_bookings_assigned_unstarted_end on bookings  (cost=0.28..50.03 rows=1020 width=84) (actual time=0.027..3.851 rows=3296.00 loops=1)
+        Index Cond: (scheduled_end < '2026-07-02 00:00:00+05:30'::timestamp with time zone)
+        Filter: ((started_at IS NULL) AND ((status)::text = 'ASSIGNED'::text))
+        Index Searches: 1
+        Buffers: shared hit=2966
+Planning:
+  Buffers: shared hit=412
+Planning Time: 1.503 ms
+Execution Time: 108.220 ms

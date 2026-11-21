@@ -1,0 +1,93 @@
+=== R10 run 1 ===
+Limit  (cost=86757.46..86757.51 rows=20 width=44) (actual time=317.602..317.632 rows=20.00 loops=1)
+  Buffers: shared hit=13225 read=37578
+  ->  Sort  (cost=86757.46..86787.15 rows=11877 width=44) (actual time=317.601..317.629 rows=20.00 loops=1)
+        Sort Key: (round(((100.0 * (count(*) FILTER (WHERE ((status)::text = 'NO_SHOW'::text)))::numeric) / (count(*))::numeric), 2)) DESC
+        Sort Method: top-N heapsort  Memory: 27kB
+        Buffers: shared hit=13225 read=37578
+        ->  Finalize HashAggregate  (cost=85847.58..86441.42 rows=11877 width=44) (actual time=302.126..313.425 rows=36335.00 loops=1)
+              Group Key: pro_id
+              Filter: (count(*) >= 20)
+              Batches: 1  Memory Usage: 3609kB
+              Rows Removed by Filter: 7729
+              Buffers: shared hit=13222 read=37578
+              ->  Gather  (cost=76298.74..85206.24 rows=85512 width=20) (actual time=271.233..282.464 rows=132125.00 loops=1)
+                    Workers Planned: 2
+                    Workers Launched: 2
+                    Buffers: shared hit=13222 read=37578
+                    ->  Partial HashAggregate  (cost=75298.74..75655.04 rows=35630 width=20) (actual time=268.226..271.992 rows=44041.67 loops=3)
+                          Group Key: pro_id
+                          Batches: 1  Memory Usage: 3609kB
+                          Buffers: shared hit=13222 read=37578
+                          Worker 0:  Batches: 1  Memory Usage: 3609kB
+                          Worker 1:  Batches: 1  Memory Usage: 3609kB
+                          ->  Parallel Seq Scan on bookings  (cost=0.00..63298.72 rows=1200002 width=15) (actual time=0.113..90.445 rows=959625.33 loops=3)
+                                Filter: (pro_id IS NOT NULL)
+                                Rows Removed by Filter: 40375
+                                Buffers: shared hit=13222 read=37578
+Planning:
+  Buffers: shared hit=451
+Planning Time: 1.273 ms
+Execution Time: 317.930 ms
+=== R10 run 2 ===
+Limit  (cost=86757.46..86757.51 rows=20 width=44) (actual time=472.250..472.288 rows=20.00 loops=1)
+  Buffers: shared hit=13469 read=37334 written=15
+  ->  Sort  (cost=86757.46..86787.15 rows=11877 width=44) (actual time=472.249..472.286 rows=20.00 loops=1)
+        Sort Key: (round(((100.0 * (count(*) FILTER (WHERE ((status)::text = 'NO_SHOW'::text)))::numeric) / (count(*))::numeric), 2)) DESC
+        Sort Method: top-N heapsort  Memory: 27kB
+        Buffers: shared hit=13469 read=37334 written=15
+        ->  Finalize HashAggregate  (cost=85847.58..86441.42 rows=11877 width=44) (actual time=456.526..468.056 rows=36335.00 loops=1)
+              Group Key: pro_id
+              Filter: (count(*) >= 20)
+              Batches: 1  Memory Usage: 3609kB
+              Rows Removed by Filter: 7729
+              Buffers: shared hit=13466 read=37334 written=15
+              ->  Gather  (cost=76298.74..85206.24 rows=85512 width=20) (actual time=421.436..434.033 rows=132135.00 loops=1)
+                    Workers Planned: 2
+                    Workers Launched: 2
+                    Buffers: shared hit=13466 read=37334 written=15
+                    ->  Partial HashAggregate  (cost=75298.74..75655.04 rows=35630 width=20) (actual time=418.824..423.513 rows=44045.00 loops=3)
+                          Group Key: pro_id
+                          Batches: 1  Memory Usage: 3609kB
+                          Buffers: shared hit=13466 read=37334 written=15
+                          Worker 0:  Batches: 1  Memory Usage: 3609kB
+                          Worker 1:  Batches: 1  Memory Usage: 3609kB
+                          ->  Parallel Seq Scan on bookings  (cost=0.00..63298.72 rows=1200002 width=15) (actual time=0.065..125.388 rows=959625.33 loops=3)
+                                Filter: (pro_id IS NOT NULL)
+                                Rows Removed by Filter: 40375
+                                Buffers: shared hit=13466 read=37334 written=15
+Planning:
+  Buffers: shared hit=451
+Planning Time: 1.244 ms
+Execution Time: 472.594 ms
+=== R10 run 3 ===
+Limit  (cost=86757.46..86757.51 rows=20 width=44) (actual time=383.626..383.666 rows=20.00 loops=1)
+  Buffers: shared hit=13751 read=37052 written=192
+  ->  Sort  (cost=86757.46..86787.15 rows=11877 width=44) (actual time=383.626..383.664 rows=20.00 loops=1)
+        Sort Key: (round(((100.0 * (count(*) FILTER (WHERE ((status)::text = 'NO_SHOW'::text)))::numeric) / (count(*))::numeric), 2)) DESC
+        Sort Method: top-N heapsort  Memory: 27kB
+        Buffers: shared hit=13751 read=37052 written=192
+        ->  Finalize HashAggregate  (cost=85847.58..86441.42 rows=11877 width=44) (actual time=363.072..378.804 rows=36335.00 loops=1)
+              Group Key: pro_id
+              Filter: (count(*) >= 20)
+              Batches: 1  Memory Usage: 3609kB
+              Rows Removed by Filter: 7729
+              Buffers: shared hit=13748 read=37052 written=192
+              ->  Gather  (cost=76298.74..85206.24 rows=85512 width=20) (actual time=327.201..339.549 rows=132120.00 loops=1)
+                    Workers Planned: 2
+                    Workers Launched: 2
+                    Buffers: shared hit=13748 read=37052 written=192
+                    ->  Partial HashAggregate  (cost=75298.74..75655.04 rows=35630 width=20) (actual time=324.181..329.072 rows=44040.00 loops=3)
+                          Group Key: pro_id
+                          Batches: 1  Memory Usage: 3609kB
+                          Buffers: shared hit=13748 read=37052 written=192
+                          Worker 0:  Batches: 1  Memory Usage: 3609kB
+                          Worker 1:  Batches: 1  Memory Usage: 3609kB
+                          ->  Parallel Seq Scan on bookings  (cost=0.00..63298.72 rows=1200002 width=15) (actual time=0.209..101.860 rows=959625.33 loops=3)
+                                Filter: (pro_id IS NOT NULL)
+                                Rows Removed by Filter: 40375
+                                Buffers: shared hit=13748 read=37052 written=192
+Planning:
+  Buffers: shared hit=451
+Planning Time: 1.314 ms
+Execution Time: 383.979 ms
